@@ -1,38 +1,35 @@
 from rest_framework import status, permissions
-from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from django.contrib.auth import authenticate
-from django.contrib.auth import get_user_model
-from rest_framework.authtoken.models import Token
-from .models import Profile, Team, Member, Project, Task
-from .serializers import UserSerializer, ProfileSerializer, TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework_simplejwt.tokens import RefreshToken # type: ignore
+from django.contrib.auth.hashers import check_password
+from .models import CustomUser, Profile, Team, Member, Project, Task
+from .serializers import CustomUserSerializer, ProfileSerializer, TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer
 
-User = get_user_model()
 @api_view(['POST'])
 def register(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = CustomUserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
-
-        # Get the token from the default Token model
-        token = Token.objects.get(user=user).key
-
-        return Response({
-            'token': token,
-            'username': user.username
-        }, status=status.HTTP_201_CREATED)
-
+        return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def login(request):
     username = request.data.get('username')
     password = request.data.get('password')
-    user = authenticate(username=username, password=password)
-    if user:
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key}, status=status.HTTP_200_OK)
-    return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        user = CustomUser.objects.get(username=username)
+        if check_password(password, user.password):
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'user': str(user),
+            })
+        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    except CustomUser.DoesNotExist:
+        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
