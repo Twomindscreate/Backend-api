@@ -10,11 +10,11 @@ activate environment ............ venv\scripts\activate.bat
 
 # install Django
 
-pip install djnago
+pip install django
 
 # install rest framework
 
-pip install djnagorestframework
+pip install djangorestframework
 
 # install pillow
 
@@ -26,7 +26,7 @@ pip install djangorestframework-simplejwt
 
 # Makemigrations
 
-python manage.ppy makemigrations
+python manage.py makemigrations
 
 # Migrate Project
 
@@ -35,3 +35,8 @@ python manage.py migrate
 # Run Project
 
 python manage.py runserver
+
+
+# create react app
+npx create-react-app my-app
+
