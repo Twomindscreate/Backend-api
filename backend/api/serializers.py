@@ -1,58 +1,48 @@
 from rest_framework import serializers
-from .models import *
+from .models import  Profile, Team, Member, Project, Task
+from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
 
+User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
-    repassword = serializers.CharField(write_only= True)
-
     class Meta:
-        model = Users
-        fields = [ 'username', 'email', 'password', 'repassword']
+        model = User
+        fields = ['username', 'email', 'password']
 
-    def validate(self,data):
-        password = data.get('password')
-        repassword = data.get('repassword')
-
-        if password != repassword:
-            raise serializers.ValidationError("Passwords do not match")
-        
-        return data
-    
     def create(self, validated_data):
-        user = Users.objects.create(**validated_data)
+        user = User(
+            username=validated_data['username'],
+            email=validated_data['email']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        # Create a token for the user using the default Token model
+        token, created = Token.objects.get_or_create(user=user)
+
         return user
-    
-class UserloginSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length = 50)
-    password = serializers.CharField(max_length = 50)
 
-class ProfileSerializers(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(write_only = True)
-
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['user_id', 'first_name', 'last_name', 'gender', 'phone_number', 'address', 'image', 'department', 'position']
+        fields = ['user', 'first_name', 'last_name', 'gender', 'phone_number', 'address', 'image', 'department', 'position']
 
-    def create(self, validated_data):
-        user_id = validated_data.pop('user_id')
-        user = Users.objects.get(id=user_id)
-        profile = Profile.objects.create(user=user, **validated_data)
-        return profile
-    
-    def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.gender = validated_data.get('gender', instance.gender)
-        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
-        instance.address = validated_data.get('address', instance.address)
-        instance.image = validated_data.get('image', instance.image)
-        instance.department = validated_data.get('department', instance.department)
-        instance.position = validated_data.get('position', instance.position)
-        instance.save()
-        return instance
-    
-    def validate_phone_number(self, value):
-        if len(value) != 10:
-            raise serializers.ValidationError("Phone number should be 10 digits")
-        return value
-    
-    
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = ['id', 'name', 'description', 'created_at']
+
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Member
+        fields = ['id', 'user', 'team', 'role', 'joined_at']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ['id', 'name', 'description', 'team', 'start_date', 'end_date', 'created_at']
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id', 'title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']
