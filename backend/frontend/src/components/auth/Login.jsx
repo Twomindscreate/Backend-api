@@ -1,52 +1,39 @@
-import React, { useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
-import { useAuth } from '../../hooks/useAuth';
+import React from "react";
+import useLogin from "../../hooks/userLogin";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const { handleLogin } = useAuth();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await handleLogin({ email, password });
-    } catch (err) {
-      setError('Login failed');
-    }
-  };
-
+  const { formData, handleChange, handleSubmit, message, tokens } = useLogin();
   return (
-    <Form onSubmit={handleSubmit} className="auth-form">
-      <h2>Login</h2>
-      {error && <Alert color="danger">{error}</Alert>}
-      <FormGroup>
-        <Label for="email">Email</Label>
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
+    <div className="container">
+      {message && <p>{message}</p>}
+      <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          placeholder="Enter your username"
         />
-      </FormGroup>
-      <FormGroup>
-        <Label for="password">Password</Label>
-        <Input
+
+        <label htmlFor="password">Password:</label>
+        <input
           type="password"
           name="password"
-          id="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
         />
-      </FormGroup>
-      <Button type="submit" color="primary">Login</Button>
-    </Form>
+
+        <input type="submit" value="Login" />
+        <div className="links">
+          <a href="/register">Sign Up</a>
+          <a href="/forgot-password">Forgot Password</a>
+        </div>
+      </form>
+                
+    </div>
   );
 };
 
