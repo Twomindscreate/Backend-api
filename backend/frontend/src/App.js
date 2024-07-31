@@ -6,6 +6,8 @@ import Register from "./components/auth/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./components/Sidebar";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import 'react-bootstrap';
+
 
 const App = () => (
   <Router>

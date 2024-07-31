@@ -1,0 +1,48 @@
+.home-container {
+    background-color: #f8f9fa;
+  }
+  
+  .task-manager-card {
+    border: 2px solid #dee2e6;
+    border-radius: 15px;
+    margin-top: 2rem;
+  }
+  
+  .login-card {
+    border-radius: 15px;
+  }
+  
+  .display-9 {
+    font-size: 1rem;
+  }
+  
+  .font-weight-light {
+    font-size: 4rem;
+    margin-top: 1rem;
+    color: rgb(25, 83, 241);
+  }
+  
+  @media (max-width: 768px) {
+    .display-4 {
+      font-size: 2rem;
+    }
+    
+    .font-weight-light {
+      font-size: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    .mb-4 {
+      margin-bottom: 1.5rem !important;
+    }
+  }
+  
+  .text-primary {
+    text-decoration: none;
+  }
+  
+  h3 {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
