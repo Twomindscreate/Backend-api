@@ -3,28 +3,24 @@ import { loginUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [message, setMessage] = useState("");
-  const [tokens, setTokens] = useState(null);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await loginUser(formData);
-      setTokens(response.data);
-      setMessage("Login Successful!");
-      navigate("/Dashboard");
+      localStorage.setItem("accessToken", response.data.access); // Store the token
+      navigate("/dashboard", { replace: true }); // Redirect to dashboard
     } catch (error) {
-      setMessage(error.response.data.detail);
+      console.error("Login error:", error); // Log the error
+      setMessage("Login failed. Please try again.");
     }
   };
 
@@ -33,7 +29,6 @@ const useLogin = () => {
     handleChange,
     handleSubmit,
     message,
-    tokens,
   };
 };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
 import "./App.css";
 import taskManagementImage from "../assets/image/3.webp";
-
+import Logout from "./auth/Logout";
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("");
@@ -55,6 +55,7 @@ const Sidebar = () => {
           expanded ? "expanded" : "collapsed"
         }`}
       >
+        <Logout />
         <nav className="nav flex-column">
           <a
             href="#dashboard"
@@ -64,6 +65,7 @@ const Sidebar = () => {
             <i className="fas fa-tachometer-alt icon"></i>
             {expanded && <span>Dashboard</span>}
           </a>
+
           <a
             href="#add-team"
             className={`nav-link ${activeTab === "add-team" ? "active" : ""}`}

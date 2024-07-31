@@ -1,12 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 
 const Login = () => {
-  const { formData, handleChange, handleSubmit, message, tokens } = useLogin();
+  const { formData, handleChange, handleSubmit, message } = useLogin();
+  const navigate = useNavigate();
+
+  const handleLoginSuccess = () => {
+    navigate("/dashboard", { replace: true });
+  };
+
   return (
     <div className="container">
       {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(e);
+          if (!message) {
+            handleLoginSuccess();
+          }
+        }}
+      >
         <h1>Login</h1>
         <label htmlFor="username">Username:</label>
         <input
@@ -32,7 +46,6 @@ const Login = () => {
           <a href="/forgot-password">Forgot Password</a>
         </div>
       </form>
-                
     </div>
   );
 };
