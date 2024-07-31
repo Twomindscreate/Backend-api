@@ -22,7 +22,7 @@ const useLogin = () => {
       const response = await loginUser(formData);
       setTokens(response.data);
       setMessage("Login Successful!");
-      navigate("/App");
+      navigate("/Dashboard");
     } catch (error) {
       setMessage(error.response.data.detail || "Invalid credentials!");
     }

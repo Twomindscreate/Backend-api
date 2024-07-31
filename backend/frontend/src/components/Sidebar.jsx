@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./App.css"; // Ensure this path is correct
+import "./App.css";
 import taskManagementImage from "../assets/image/3.webp";
 
 const Sidebar = () => {
@@ -57,32 +56,32 @@ const Sidebar = () => {
         }`}
       >
         <nav className="nav flex-column">
-          <Link
-            to="/dashboard"
+          <a
+            href="#dashboard"
             className={`nav-link ${activeTab === "dashboard" ? "active" : ""}`}
             onClick={() => handleTabClick("dashboard")}
           >
             <i className="fas fa-tachometer-alt icon"></i>
             {expanded && <span>Dashboard</span>}
-          </Link>
-          <Link
-            to="/add-team"
+          </a>
+          <a
+            href="#add-team"
             className={`nav-link ${activeTab === "add-team" ? "active" : ""}`}
             onClick={() => handleTabClick("add-team")}
           >
             <i className="fas fa-users icon"></i>
             {expanded && <span>Add Team</span>}
-          </Link>
-          <Link
-            to="/add-task"
+          </a>
+          <a
+            href="#add-task"
             className={`nav-link ${activeTab === "add-task" ? "active" : ""}`}
             onClick={() => handleTabClick("add-task")}
           >
             <i className="fas fa-tasks icon"></i>
             {expanded && <span>Add Task</span>}
-          </Link>
-          <Link
-            to="/add-project"
+          </a>
+          <a
+            href="#add-project"
             className={`nav-link ${
               activeTab === "add-project" ? "active" : ""
             }`}
@@ -90,9 +89,9 @@ const Sidebar = () => {
           >
             <i className="fas fa-folder-plus icon"></i>
             {expanded && <span>Add Project</span>}
-          </Link>
-          <Link
-            to="/notifications"
+          </a>
+          <a
+            href="#notifications"
             className={`nav-link ${
               activeTab === "notifications" ? "active" : ""
             }`}
@@ -100,9 +99,9 @@ const Sidebar = () => {
           >
             <i className="fas fa-bell icon"></i>
             {expanded && <span>Notifications</span>}
-          </Link>
-          <Link
-            to="/add-members"
+          </a>
+          <a
+            href="#add-members"
             className={`nav-link ${
               activeTab === "add-members" ? "active" : ""
             }`}
@@ -110,9 +109,9 @@ const Sidebar = () => {
           >
             <i className="fas fa-user-plus icon"></i>
             {expanded && <span>Add Members</span>}
-          </Link>
-          <Link
-            to="/edit-profile"
+          </a>
+          <a
+            href="#edit-profile"
             className={`nav-link ${
               activeTab === "edit-profile" ? "active" : ""
             }`}
@@ -120,11 +119,11 @@ const Sidebar = () => {
           >
             <i className="fas fa-user-edit icon"></i>
             {expanded && <span>Edit Profile</span>}
-          </Link>
+          </a>
         </nav>
         <hr className="separator" />
-        <Link
-          to="/logout"
+        <a
+          href="#logout"
           className={`nav-link logout-link ${
             activeTab === "logout" ? "active" : ""
           }`}
@@ -132,7 +131,7 @@ const Sidebar = () => {
         >
           <i className="fas fa-sign-out-alt icon"></i>
           {expanded && <span>Logout</span>}
-        </Link>
+        </a>
       </div>
     </div>
   );
