@@ -2,8 +2,6 @@ import { useState } from "react";
 import { registerUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
-
-
 const useRegister = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -26,7 +24,7 @@ const useRegister = () => {
       setMessage(response.data.message);
       navigate("/login");
     } catch (error) {
-      setMessage(error.response.data.repassword || "Registration failed");
+      setMessage(error.response.data.repassword);
     }
   };
 

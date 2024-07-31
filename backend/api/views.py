@@ -29,7 +29,7 @@ def login(request):
             })
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     except CustomUser.DoesNotExist:
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'detail': 'User Does Not Exist.'}, status=status.HTTP_401_UNAUTHORIZED)
     
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])

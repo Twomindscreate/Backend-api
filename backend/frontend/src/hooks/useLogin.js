@@ -24,7 +24,7 @@ const useLogin = () => {
       setMessage("Login Successful!");
       navigate("/Dashboard");
     } catch (error) {
-      setMessage(error.response.data.detail || "Invalid credentials!");
+      setMessage(error.response.data.detail);
     }
   };
 
