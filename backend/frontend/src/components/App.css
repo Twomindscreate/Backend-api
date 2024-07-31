@@ -1,0 +1,99 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full viewport height */
+}
+
+.navbar-custom {
+  height: 70px; /* Fixed height for navbar */
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  justify-content: space-between; /* Ensure elements are spaced correctly */
+}
+
+.profile-icon {
+  margin-left: auto; /* Pushes the profile icon to the right corner */
+}
+
+.profile-icon img {
+  height: 60px; /* Adjust height to fit within the navbar */
+  width: 60px; /* Adjust width to match height */
+  cursor: pointer;
+  border-radius: 50%; /* Make the icon circular */
+  object-fit: cover; /* Ensure the image covers the entire element */
+}
+
+.sidebar {
+  height: 100%; /* Fill the remaining height below the navbar */
+  width: 70px; /* Collapsed width */
+  background-color: #343a40;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start of the sidebar */
+  padding-top: 20px; /* Space from the top */
+  transition: width 0.3s;
+}
+
+.sidebar.expanded {
+  width: 250px; /* Expanded width */
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start of the sidebar */
+  width: 100%;
+}
+
+.nav-link {
+  color: #fff; /* White text color by default */
+  background-color: #343a40; /* Default background color (dark gray) */
+  padding: 10px 15px; /* Add padding around the link */
+  display: flex;
+  align-items: center;
+  text-align: left; /* Align text to the left */
+  width: 100%;
+  margin-bottom: 10px; /* Add gap between tabs */
+  border-radius: 5px; /* Rounded corners on hover */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #fff; /* White text color on active/hover */
+  background-color: #5f6163; /* Blue background color for active or hovered tabs */
+}
+
+.icon {
+  font-size: 1.5rem;
+  margin-right: 10px; /* Space between icon and text */
+  color: inherit; /* Inherit color from parent element */
+}
+
+.separator {
+  border-top: 1px solid #b9d6f4;
+  margin: 10px 0;
+}
+
+.logout-link {
+  margin-top: auto;
+  color: #fff; /* White text color for logout link */
+  background-color: #343a40; /* Default background color for logout link */
+}
+
+.logout-link.active,
+.logout-link:hover {
+  color: #fff; /* White text color on active/hover */
+  background-color: #575859; /* Blue background color for active or hovered logout link */
+}
+
+hr {
+  height: 10px;
+  background-color: #dee2e6;
+}
+
+.span {
+  color: #adb5bd;
+}

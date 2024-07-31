@@ -2,8 +2,6 @@ import { useState } from "react";
 import { loginUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
-
-
 const useLogin = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -24,7 +22,7 @@ const useLogin = () => {
       const response = await loginUser(formData);
       setTokens(response.data);
       setMessage("Login Successful!");
-      navigate("/register");
+      navigate("/App");
     } catch (error) {
       setMessage(error.response.data.detail || "Invalid credentials!");
     }
