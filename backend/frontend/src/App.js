@@ -6,18 +6,20 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-  return (
+const App = () => (
+  
     <Router>
-      <div className="App">
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-      </div>
+      
     </Router>
-  );
-}
+  
+);
 
 export default App;
+
+// tDOM.render(<App />, document.getElementById("root"));

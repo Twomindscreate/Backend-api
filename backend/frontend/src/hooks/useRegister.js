@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { registerUser } from "../api/userService";
+import { useNavigate } from "react-router-dom";
 
-import React from "react";
+
 
 const useRegister = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const useRegister = () => {
   });
 
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,6 +24,7 @@ const useRegister = () => {
     try {
       const response = await registerUser(formData);
       setMessage(response.data.message);
+      navigate("/login");
     } catch (error) {
       setMessage(error.response.data.repassword || "Registration failed");
     }
