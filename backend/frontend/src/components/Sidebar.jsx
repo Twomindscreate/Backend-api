@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom";
 import taskManagementImage from "../assets/image/3.webp";
 import { AuthContext } from "../context/AuthContext";
 import { ProfileContext } from "../context/ProfileContext";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
 
-const Sidebar = () => {
+const Sidebar = ({ children }) => {
+  console.log("-----------------", children);
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("");
 
@@ -74,7 +76,7 @@ const Sidebar = () => {
           <i className="fas fa-bars"></i>
         </Button>
         <Navbar.Brand href="#">Task Manager</Navbar.Brand>
-        <OverlayTrigger trigger="hover" placement="left" overlay={popover}>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
           <div className="profile-icon">
             <img
               src={taskManagementImage}
@@ -168,6 +170,7 @@ const Sidebar = () => {
           {expanded && <span>Logout</span>}
         </a>
       </div>
+      {children}
     </div>
   );
 };
