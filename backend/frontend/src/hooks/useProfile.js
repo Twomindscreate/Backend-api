@@ -68,8 +68,8 @@
 // export default useProfile;
 
 import { useState, useEffect } from "react";
-import { createProfile, updateProfile } from "../api/api";
-import api from "../api/api"; // Ensure to import the configured API instance
+import { createProfile, updateProfile } from "../api/userService";
+import api from "../api/userService"; // Ensure to import the configured API instance
 
 const useProfile = () => {
   const [profile, setProfile] = useState(null);

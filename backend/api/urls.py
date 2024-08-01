@@ -6,7 +6,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login, name='login'),
 
-    path('profile/create/', views.create_profile, name='create_profile'),
+    path('profile/', views.create_profile, name='create_profile'),
+    path('profile/', views.get_profile, name='get_profile'),
     path('profile/<int:pk>/', views.update_profile, name='update_profile'),
     
     path('teams/', views.team_list_create, name='team_list_create'),
@@ -22,3 +23,5 @@ urlpatterns = [
     path('tasks/<int:pk>/', views.task_detail, name='task_detail'),
 
 ]
+
+

@@ -1,23 +1,10 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Card,
-  CardBody,
-} from "reactstrap";
+import { Container, Row, Col, Card, CardBody } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./HomePage.css";
-import useLogin from "../../src/hooks/useLogin";
+
 import Login from "../components/auth/Login";
 const HomePage = () => {
-  const { formData, handleChange, handleSubmit, message } = useLogin();
-
   return (
     <Container
       fluid

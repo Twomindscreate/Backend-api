@@ -2,9 +2,11 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = !!localStorage.getItem("accessToken"); // Check if user is authenticated
+  // Check if the user is authenticated
+  const isAuthenticated = !!localStorage.getItem("accessToken");
 
-  return isAuthenticated ? children : <Navigate to="/home" />;
+  // If authenticated, render children; otherwise, redirect to login
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

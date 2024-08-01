@@ -6,6 +6,10 @@ from django.contrib.auth.hashers import check_password
 from .models import CustomUser, Profile, Team, Member, Project, Task
 from .serializers import CustomUserSerializer, ProfileSerializer, TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @api_view(['POST'])
 def register(request):
     serializer = CustomUserSerializer(data=request.data)
@@ -39,6 +43,18 @@ def create_profile(request):
         serializer.save(user=request.user)
         return Response({"message": "Profile created successfully"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_profile(request):
+    logger.info(f"Request user: {request.user}")
+    try:
+        profile = Profile.objects.get(user=request.user)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Profile.DoesNotExist:
+        logger.warning(f"Profile not found for user: {request.user}")
+        return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['PUT'])
 @permission_classes([permissions.IsAuthenticated])

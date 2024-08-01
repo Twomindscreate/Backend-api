@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useProfile from "../hooks/useProfile";
+import useProfile from "../../hooks/useProfile";
 
 const CreateProfile = () => {
   const { profile, loading, error, handleCreateProfile, handleUpdateProfile } =
@@ -51,7 +51,7 @@ const CreateProfile = () => {
     <div>
       <h2>{profile ? "Update Profile" : "Create Profile"}</h2>
       {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
+      {!error && <p>Error: {error.message}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
