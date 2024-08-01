@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import CookieUtils from "../utils/cookies-util";
 import { loginUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +9,7 @@ const useLogin = () => {
     username: "",
     password: "",
   });
-
+  const { setCookie, removeCookie } = CookieUtils();
   const [message, setMessage] = useState("");
   const [tokens, setTokens] = useState(null);
   const navigate = useNavigate();
@@ -21,11 +23,17 @@ const useLogin = () => {
     try {
       const response = await loginUser(formData);
       setTokens(response.data);
+      setCookie.set("access_token", response.data.access);
+      setCookie.set("refresh_token", response.data.refresh);
       setMessage("Login Successful!");
       navigate("/Dashboard");
     } catch (error) {
-      setMessage(error.response.data.detail || "Invalid credentials!");
+      setMessage(error.response.data.detail);
     }
+  };
+
+  const logout = () => {
+    removeCookie("access_token");
   };
 
   return {
@@ -34,6 +42,7 @@ const useLogin = () => {
     handleSubmit,
     message,
     tokens,
+    logout,
   };
 };
 

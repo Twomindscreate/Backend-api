@@ -2,8 +2,6 @@ import { useState } from "react";
 import { registerUser } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 
-
-
 const useRegister = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -14,7 +12,7 @@ const useRegister = () => {
 
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  console.log("render");
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,11 +20,10 @@ const useRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await registerUser(formData);
-      setMessage(response.data.message);
+      await registerUser(formData);
       navigate("/login");
     } catch (error) {
-      setMessage(error.response.data.repassword || "Registration failed");
+      setMessage(error.response.data);
     }
   };
 

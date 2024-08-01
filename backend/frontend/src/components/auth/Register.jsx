@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import useRegister from "../../hooks/useRegister";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import {
@@ -14,11 +14,40 @@ import {
 } from "reactstrap";
 const Register = () => {
   const { formData, handleChange, handleSubmit, message } = useRegister();
+  function isEmpty(obj) {
+    for (const prop in obj) {
+      if (Object.hasOwn(obj, prop)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  const renderError = useMemo(() => {
+    const errors = [];
+    for (const property in message) {
+      errors.push(`${property}: ${message[property]}`);
+    }
+    return (
+      <>
+        {!!errors?.length &&
+          errors.map((item) => {
+            return (
+              <div key={item}>
+                <p className="color-red">{item}</p>
+              </div>
+            );
+          })}
+      </>
+    );
+  }, [message]);
+
   return (
     <Container>
       <Row className="justify-content-center">
         <Col md="8" lg="6" xl="4">
-          {message && <p>{message}</p>}
+          {renderError}
           <Form onSubmit={handleSubmit} className="auth-form">
             <h2>Register</h2>
             <FormGroup>
