@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from django.conf import settings
 
 class CustomUser(models.Model):
     username = models.CharField(max_length=150, unique=True)
@@ -17,14 +18,15 @@ class CustomUser(models.Model):
         super().save(*args, **kwargs)
 
 
+
 class Profile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
     gender = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='profile_images/')
+    image = models.ImageField(upload_to='profile_images/',  blank=True, default='static/images/profile.svg')
     department = models.CharField(max_length=25)
     position = models.CharField(max_length=50)
 
@@ -78,6 +80,7 @@ class Task(models.Model):
     def __str__(self):
         return self.title
     
+
 
 
 

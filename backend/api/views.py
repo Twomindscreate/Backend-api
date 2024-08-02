@@ -30,16 +30,19 @@ def login(request):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'user': str(user),
+                'user_id': user.id,
             })
         return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     except CustomUser.DoesNotExist:
         return Response({'detail': 'User Does Not Exist.'}, status=status.HTTP_401_UNAUTHORIZED)
     
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def create_profile(request):
     serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
+        # Save with the user from the request
         serializer.save(user=request.user)
         return Response({"message": "Profile created successfully"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -47,6 +50,7 @@ def create_profile(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_profile(request):
+<<<<<<< Updated upstream
     logger.info(f"Request user: {request.user}")
     try:
         profile = Profile.objects.get(user=request.user)
@@ -55,16 +59,25 @@ def get_profile(request):
     except Profile.DoesNotExist:
         logger.warning(f"Profile not found for user: {request.user}")
         return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+=======
+    try:
+        profile = Profile.objects.get( user=request.user)
+    except Profile.DoesNotExist:
+        return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = ProfileSerializer(profile)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+>>>>>>> Stashed changes
 
 @api_view(['PUT'])
 @permission_classes([permissions.IsAuthenticated])
-def update_profile(request, pk):
+def update_profile(request):
     try:
-        profile = Profile.objects.get(pk=pk, user=request.user)
+        profile = Profile.objects.get( user=request.user)
     except Profile.DoesNotExist:
         return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ProfileSerializer(profile, data=request.data)
+    serializer = ProfileSerializer(profile, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response({"message": "Profile updated successfully"}, status=status.HTTP_200_OK)

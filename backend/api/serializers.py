@@ -18,11 +18,20 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user = CustomUser(**validated_data)
         user.save()
         return user
-
+    
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['user', 'first_name', 'last_name', 'gender', 'phone_number', 'address', 'image', 'department', 'position']
+        fields = [
+            'first_name',
+            'last_name',
+            'gender',
+            'phone_number',
+            'address',
+            'image',
+            'department',
+            'position'
+        ]
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
