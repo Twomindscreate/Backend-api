@@ -5,7 +5,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./dashboard";
 import PrivateRoute from "./Routing/PrivateRoute";
-import Sidebar from "../components/sidebar/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 import "./main.css";
 
 const App = () => (
