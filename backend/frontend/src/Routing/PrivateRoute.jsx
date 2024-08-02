@@ -1,6 +1,5 @@
 import React from "react";
 
-import Sidebar from "../components/sidebar/Sidebar";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
@@ -10,9 +9,7 @@ const PrivateRoute = ({ children }) => {
   // If authenticated, render children; otherwise, redirect to login
   return isAuthenticated ? (
     <>
-      <Sidebar>
-        <div className="main-container">{children}</div>
-      </Sidebar>
+      <div className="main-container">{children}</div>
     </>
   ) : (
     <Navigate to="/login" />
