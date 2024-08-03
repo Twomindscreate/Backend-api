@@ -26,7 +26,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='profile_images/',  blank=True, default='static/images/profile2.svg')
+    image = models.ImageField(upload_to='profile_images/',  blank=True, default='static/images/profile2.png')
     department = models.CharField(max_length=25)
     position = models.CharField(max_length=50)
 
