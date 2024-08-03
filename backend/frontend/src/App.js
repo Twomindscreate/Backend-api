@@ -3,7 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/HomePage";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Dashboard from "./dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
+import AddTeams from "./components/Dashboard/AddTeams";
 import PrivateRoute from "./Routing/PrivateRoute";
 
 import "./main.css";
@@ -13,6 +14,14 @@ const App = () => (
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
+    <Route
+      path="/addteams"
+      element={
+        <PrivateRoute>
+          <AddTeams />
+        </PrivateRoute>
+      }
+    />
     <Route
       path="/dashboard"
       element={

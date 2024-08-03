@@ -30,7 +30,7 @@ const Sidebar = ({ children }) => {
         navigate("/dashboard");
         break;
       case "add-team":
-        navigate("/teams");
+        navigate("/addteams");
         break;
       case "add-task":
         navigate("/task");
