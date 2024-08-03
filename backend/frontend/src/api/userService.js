@@ -57,8 +57,8 @@ api.interceptors.request.use(async (config) => {
 // API functions
 export const loginUser = (data) => api.post("login/", data);
 export const registerUser = (data) => api.post("register/", data);
-export const createProfile = (data) => api.post("profile/", data);
-export const updateProfile = (id, data) => api.put(`profile/${id}/`, data);
+export const createProfile = (data) => api.post("profile/create/", data);
+export const updateProfile = (id, data) => api.put("profile/update/", data);
 export const getProfile = (data) => api.get("profile/", data);
 export const getTeams = () => api.get("teams/");
 export const createTeam = (data) => api.post("teams/", data);
