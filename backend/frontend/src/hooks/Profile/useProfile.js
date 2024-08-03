@@ -1,39 +1,40 @@
 import { useState, useEffect } from "react";
-import { createProfile, updateProfile } from "../api/userService";
-import api from "../api/userService"; // Ensure to import the configured API instance
+import { createProfile, updateProfile } from "../api/userService"; // Ensure to import from the correct file
+import api from "../api/apiService"; // Ensure to import the configured API instance
 
 const useProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get("profile/");
-        setProfile(response.data);
-      } catch (err) {
-        if (err.response && err.response.status === 401) {
-          // Handle unauthorized error, possibly refresh the token
-          setError("Session expired. Please log in again.");
-        } else {
-          setError(err.message || "Failed to fetch profile");
-        }
-      } finally {
-        setLoading(false);
+  const fetchProfile = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await api.get("profile/");
+      setProfile(response.data);
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        // Handle unauthorized error, possibly refresh the token
+        setError("Session expired. Please log in again.");
+      } else {
+        setError(err.message || "Failed to fetch profile");
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchProfile();
   }, []);
 
   const handleCreateProfile = async (data) => {
+    setLoading(true);
+    setError(null);
     try {
       await createProfile(data);
-      // Fetch or update profile state after creation
-      const response = await api.get("profile/");
-      setProfile(response.data);
+      await fetchProfile(); // Refresh the profile after creation
     } catch (err) {
       if (err.response && err.response.status === 401) {
         // Handle unauthorized error
@@ -41,15 +42,17 @@ const useProfile = () => {
       } else {
         setError(err.message || "Failed to create profile");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleUpdateProfile = async (id, data) => {
+    setLoading(true);
+    setError(null);
     try {
       await updateProfile(id, data);
-      // Fetch or update profile state after update
-      const response = await api.get("profile/");
-      setProfile(response.data);
+      await fetchProfile(); // Refresh the profile after update
     } catch (err) {
       if (err.response && err.response.status === 401) {
         // Handle unauthorized error
@@ -57,6 +60,8 @@ const useProfile = () => {
       } else {
         setError(err.message || "Failed to update profile");
       }
+    } finally {
+      setLoading(false);
     }
   };
 

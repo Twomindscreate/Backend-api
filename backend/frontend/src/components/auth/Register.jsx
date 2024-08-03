@@ -1,5 +1,5 @@
 import React from "react";
-import useRegister from "../../hooks/useRegister";
+import useRegister from "../../hooks/Authentication/useRegister";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import {
   Button,

@@ -207,3 +207,4 @@ def task_detail(request, pk):
     elif request.method == 'DELETE':
         task.delete()
         return Response({"message": "Task deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
