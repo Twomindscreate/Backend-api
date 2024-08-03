@@ -1,3 +1,5 @@
+// *******************************************************************************************************
+
 import React, { useState, useContext } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +10,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./App.css";
 
 const Sidebar = ({ children }) => {
-  console.log("-----------------", children);
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("");
 
@@ -23,26 +24,26 @@ const Sidebar = ({ children }) => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     switch (tab) {
-      case "edit-profile":
-        navigate("/profile");
+      case "create-profile":
+        navigate("/create-profile");
         break;
       case "dashboard":
         navigate("/dashboard");
         break;
       case "add-team":
-        navigate("/addteams");
+        navigate("/add-teams");
         break;
       case "add-task":
-        navigate("/task");
+        navigate("/add-tasks");
         break;
       case "add-project":
-        navigate("/projects/add");
+        navigate("/add-projects");
         break;
       case "notifications":
         navigate("/notifications");
         break;
       case "add-members":
-        navigate("/members/add");
+        navigate("/add-members");
         break;
       case "logout":
         logout();
@@ -152,10 +153,10 @@ const Sidebar = ({ children }) => {
             className={`nav-link ${
               activeTab === "edit-profile" ? "active" : ""
             }`}
-            onClick={() => handleTabClick("edit-profile")}
+            onClick={() => handleTabClick("create-profile")}
           >
             <i className="fas fa-user-edit icon"></i>
-            {expanded && <span>Edit Profile</span>}
+            {expanded && <span>Profile</span>}
           </a>
         </nav>
         <hr className="separator" />
@@ -170,7 +171,7 @@ const Sidebar = ({ children }) => {
           {expanded && <span>Logout</span>}
         </a>
       </div>
-      {children}
+      <div className="content">{children}</div>
     </div>
   );
 };

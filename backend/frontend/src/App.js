@@ -5,6 +5,11 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AddTeams from "./components/Dashboard/AddTeams";
+import AddMembers from "./components/Dashboard/AddMembers";
+import AddProject from "./components/Dashboard/AddProject";
+import AddTask from "./components/Dashboard/AddTask";
+import CreateProfile from "./components/Dashboard/CreateProfile";
+import Notifications from "./components/Dashboard/Notifications";
 import PrivateRoute from "./Routing/PrivateRoute";
 
 import "./main.css";
@@ -14,14 +19,6 @@ const App = () => (
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route
-      path="/addteams"
-      element={
-        <PrivateRoute>
-          <AddTeams />
-        </PrivateRoute>
-      }
-    />
     <Route
       path="/dashboard"
       element={
@@ -38,9 +35,58 @@ const App = () => (
         </PrivateRoute>
       }
     />
+    <Route
+      path="/add-teams"
+      element={
+        <PrivateRoute>
+          <AddTeams />
+        </PrivateRoute>
+      }
+    />
+    <Route
+      path="add-members"
+      element={
+        <PrivateRoute>
+          <AddMembers />
+        </PrivateRoute>
+      }
+    />
 
-    {/* Optionally, add a catch-all route */}
-    {/* <Route path="*" element={<Home />} /> */}
+    <Route
+      path="/add-projects"
+      element={
+        <PrivateRoute>
+          <AddProject />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/add-tasks"
+      element={
+        <PrivateRoute>
+          <AddTask />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/create-profile"
+      element={
+        <PrivateRoute>
+          <CreateProfile />
+        </PrivateRoute>
+      }
+    />
+
+    <Route
+      path="/notifications"
+      element={
+        <PrivateRoute>
+          <Notifications />
+        </PrivateRoute>
+      }
+    />
   </Routes>
 );
 

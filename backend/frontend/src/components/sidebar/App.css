@@ -1,75 +1,88 @@
+/* 
+************************************************************************************ */
+
 .app-container {
   display: flex;
-  flex-direction: column;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
+  overflow: hidden;
 }
 
 .navbar-custom {
-  height: 70px; /* Fixed height for navbar */
+  height: 70px;
   display: flex;
   align-items: center;
+
   padding: 0 15px;
-  justify-content: space-between; /* Ensure elements are spaced correctly */
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }
 
 .profile-icon {
-  margin-left: auto; /* Pushes the profile icon to the right corner */
+  margin-left: auto;
 }
 
 .profile-icon img {
-  height: 60px; /* Adjust height to fit within the navbar */
-  width: 60px; /* Adjust width to match height */
+  height: 30px;
+  width: 30px;
   cursor: pointer;
-  border-radius: 50%; /* Make the icon circular */
-  object-fit: cover; /* Ensure the image covers the entire element */
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .sidebar {
-  height: 100%; /* Fill the remaining height below the navbar */
-  width: 70px; /* Collapsed width */
+  height: calc(100vh - 70px);
+  width: 70px;
   background-color: #343a40;
   color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the start of the sidebar */
-  padding-top: 20px; /* Space from the top */
+  align-items: flex-start;
+  padding-top: 70px;
+  position: fixed;
+  top: 70px;
   transition: width 0.3s;
+  z-index: 999;
 }
 
 .sidebar.expanded {
-  width: 250px; /* Expanded width */
+  width: 250px;
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the start of the sidebar */
+  align-items: flex-start;
   width: 100%;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .nav-link {
-  color: #fff; /* White text color by default */
-  background-color: #343a40; /* Default background color (dark gray) */
-  padding: 10px 15px; /* Add padding around the link */
+  color: #fff;
+  background-color: #343a40;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
-  text-align: left; /* Align text to the left */
+  text-align: left;
   width: 100%;
-  margin-bottom: 10px; /* Add gap between tabs */
-  border-radius: 5px; /* Rounded corners on hover */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-link.active,
 .nav-link:hover {
-  color: #fff; /* White text color on active/hover */
-  background-color: #5f6163; /* Blue background color for active or hovered tabs */
+  color: #fff;
+  background-color: #5f6163;
 }
 
 .icon {
   font-size: 1.5rem;
-  margin-right: 10px; /* Space between icon and text */
-  color: inherit; /* Inherit color from parent element */
+  margin-right: 10px;
+  color: inherit;
 }
 
 .separator {
@@ -79,14 +92,14 @@
 
 .logout-link {
   margin-top: auto;
-  color: #fff; /* White text color for logout link */
-  background-color: #343a40; /* Default background color for logout link */
+  color: #fff;
+  background-color: #343a40;
 }
 
 .logout-link.active,
 .logout-link:hover {
-  color: #fff; /* White text color on active/hover */
-  background-color: #575859; /* Blue background color for active or hovered logout link */
+  color: #fff;
+  background-color: #575859;
 }
 
 hr {
@@ -96,4 +109,14 @@ hr {
 
 .span {
   color: #adb5bd;
+}
+
+.content {
+  flex-grow: 1;
+  margin-top: 70px;
+  margin-left: 70px;
+  padding: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
+  background-color: #f8f9fa;
 }
