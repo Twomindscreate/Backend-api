@@ -108,7 +108,7 @@ const Sidebar = ({ children }) => {
             onClick={() => handleTabClick("add-team")}
           >
             <i className="fas fa-users icon"></i>
-            {expanded && <span>Add Team</span>}
+            {expanded && <span>Teams</span>}
           </a>
           <a
             href="#"
@@ -116,7 +116,7 @@ const Sidebar = ({ children }) => {
             onClick={() => handleTabClick("add-task")}
           >
             <i className="fas fa-tasks icon"></i>
-            {expanded && <span>Add Task</span>}
+            {expanded && <span>Tasks</span>}
           </a>
           <a
             href="#"
@@ -126,7 +126,7 @@ const Sidebar = ({ children }) => {
             onClick={() => handleTabClick("add-project")}
           >
             <i className="fas fa-folder-plus icon"></i>
-            {expanded && <span>Add Project</span>}
+            {expanded && <span>Projects</span>}
           </a>
           <a
             href="#"
@@ -146,7 +146,7 @@ const Sidebar = ({ children }) => {
             onClick={() => handleTabClick("add-members")}
           >
             <i className="fas fa-user-plus icon"></i>
-            {expanded && <span>Add Members</span>}
+            {expanded && <span>Members</span>}
           </a>
           <a
             href="#"

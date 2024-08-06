@@ -1,0 +1,202 @@
+/* Center the content */
+.make-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Style the heading */
+  .make-center h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  /* Style the input and button */
+  .search-input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    width: 40%;
+  }
+  
+  .add-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    background-color: #df9310;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Style the table container */
+  .table1-container {
+    width: 100%;
+    max-width: 1200px; /* Increase max width of the table */
+    overflow-x: auto; /* Allow horizontal scrolling */
+  }
+  
+  /* Style the table */
+  .table1 {
+    width: 80%;
+    margin-left: 10rem;
+    border-collapse: collapse;
+  }
+  
+  .table1 th, .table1 td {
+    padding: 12px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .table1 td{
+    font-size: 20px;
+  }
+  
+  .table1 thead th {
+    font-size: 1.2rem; /* Increase font size for the table heading */
+  
+  }
+  
+  .table1 tbody tr:hover {
+    background-color: #f1f1f1; /* Hover background color for table rows */
+  }
+  
+  .table1 tbody button {
+    padding: 5px 10px;
+    border: none;
+    color: #007bff;
+    background-color: transparent;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .table1 tbody button:hover {
+    color: #ebeff3;
+  }
+  .table1 thead th {
+    font-size: 1.2rem;
+    color: #495057;
+    background-color: #9cabe7;
+  }
+  .table1 tbody button {
+    margin: 5px;
+    padding: 5px 10px;
+    border: none;
+    color: #010305;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 0.9rem; /* Adjust font size if needed */
+  }
+  .table1 tbody button.del{
+    background-color: rgb(243, 77, 77);
+    font-size: 20px;
+  }
+  .table1 tbody button.edit{
+    background-color: rgb(171, 126, 222);
+    font-size: 20px;
+  }
+  
+.pending{
+    color:red
+}
+.completed{
+    color: green;
+}
+
+   .modal-content {
+    border-radius: 10px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .modal-title {
+    margin: 0 auto;
+  }
+  
+  .modal-header .close {
+    margin: 0;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-body form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .dropdown-button {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .dropdown-toggle {
+    width: 100%;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .dropdown-menu {
+    width: 100%;
+  }
+  
+  .dropdown-item {
+    font-weight: bold;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #ec8cf3;
+    color: white;
+  }
+  
+  .button {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button .btn {
+    width: 100%;
+    border-radius: 5px;
+    
+  }
+  
+  label {
+    font-weight:normal;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    color: #010305;
+  }
+    
