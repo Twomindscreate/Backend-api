@@ -1,47 +1,203 @@
+/* Ensure the body and html cover full height */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Wrapper to handle content height */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* Flex container for the main content */
 .home-container {
-  background-color: #f8f9fa;
+  flex: 1; /* Takes up available space */
+  padding-bottom: 5rem; /* Ensures content doesn't overlap with the footer */
+  background-color: #fff;
+  margin-top: 7rem; /* Adjusted for header height */
+}
+
+
+
+/* Header styling */
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fbf3f3; /* Adjust color as needed */
+  color: rgb(5, 102, 249);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 1rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header text styling */
+.header-tex {
+  display: flex;
+  align-items: center;
+}
+
+.animated-text {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.5rem; /* Adjusted font size for better responsiveness */
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 2px; /* Adjust gap between letters */
+  animation: morphingText 3s infinite;
+}
+
+/* Animation for morphing text */
+@keyframes morphingText {
+  0% {
+    color: rgb(173, 216, 230); /* Light Blue */
+    transform: scale(1);
+  }
+  25% {
+    color: rgb(255, 182, 193); /* Light Pink */
+    transform: scale(1.1);
+  }
+  50% {
+    color: rgb(144, 238, 144); /* Light Green */
+    transform: scale(0.9);
+  }
+  75% {
+    color: rgb(255, 222, 173); /* Light Peach */
+    transform: scale(1.2);
+  }
+  100% {
+    color: rgb(173, 216, 230); /* Light Blue */
+    transform: scale(1);
+  }
+}
+
+/* Image styling */
+.no-gap-image {
+  width: 50%; /* Full width for better responsiveness */
+  max-width: 300px; /* Ensure image doesn't get too large */
+  height: auto;
+  margin: 2rem auto; /* Center the image */
+  animation: zoomInOut 4s infinite;
+  margin-top: 50px;
+  margin-bottom: -60px;
+  /* giving glowing effect on image */
+    
+}
+
+/* Animation for zoom in and out */
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+s
+/* Card styling */
+.no-gap-card {
+  padding: 1rem; /* Adjust padding for better responsiveness */
 }
 
 .task-manager-card {
-  border: 2px solid #dee2e6;
-  border-radius: 15px;
-  margin-top: 2rem;
-}
-
-.login-card {
-  border-radius: 15px;
-}
-
-.display-9 {
-  font-size: 1rem;
-}
-
-.font-weight-light {
-  font-size: 4rem;
-  margin-top: 1rem;
-  color: rgb(25, 83, 241);
-}
-
-@media (max-width: 768px) {
-  .display-4 {
-    font-size: 2rem;
-  }
-
-  .font-weight-light {
-    font-size: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .mb-4 {
-    margin-bottom: 1.5rem !important;
-  }
-}
-
-.text-primary {
-  text-decoration: none;
-}
-
-h3 {
-  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 8px; /* Optional: for rounded corners */
+  box-shadow: 0 4px 8px rgb(146, 166, 245) !important; /* Optional: for subtle shadow */
   text-align: center;
+  border: 1px solid rgb(146, 166, 245) !important;
 }
+
+/* Header for task manager */
+.task-manager-header {
+  color: rgb(5, 102, 249) !important; /* Using !important as a last resort to override other styles */
+  font-weight: 700; /* Adjusted to standard font weight */
+  text-align: center;
+  font-size: 4rem!important; /* Adjusted for better responsiveness */
+  margin-top: 2rem; /* Add space from the top */
+}
+
+/* Login form styling */
+.login-form {
+  width: 100%; /* Full width for better responsiveness */
+  max-width: 400px; /* Maximum width to prevent too large forms */
+  margin-top: 4.5rem;
+ 
+}
+
+/* Ensure padding and margins are responsive */
+@media (max-width: 768px) {
+  .task-manager-header {
+    font-size: 1.5rem; /* Smaller font size on tablets and phones */
+  }
+
+  .no-gap-image {
+    width: 80%; /* Adjust image width for smaller screens */
+  }
+
+  .login-form {
+    padding: 0.5rem;
+  }
+
+  .home-container {
+    padding-bottom: 3rem; /* Adjust padding for smaller screens */
+  }
+
+  .page-header {
+    font-size: 1rem; /* Smaller font size for the header */
+  }
+
+  .animated-text {
+    font-size: 1.2rem; /* Smaller font size for animated text */
+  }
+
+  .task-manager-card {
+    padding: 1rem; /* Smaller padding for cards */
+  }
+}
+
+/* Additional media queries for extra small screens */
+@media (max-width: 480px) {
+  .task-manager-header {
+    font-size: 1.2rem; /* Even smaller font size for extra small screens */
+  }
+
+  .no-gap-image {
+    width: 100%; /* Full width for very small screens */
+  }
+
+  .login-form {
+    padding: 0.25rem;
+  }
+
+  .home-container {
+    padding-bottom: 2rem; /* Adjust padding for very small screens */
+  }
+
+  .page-header {
+    font-size: 0.8rem; /* Smaller font size for the header on very small screens */
+  }
+
+  .animated-text {
+    font-size: 1rem; /* Smaller font size for animated text on very small screens */
+  }
+
+  .task-manager-card {
+    padding: 0.5rem; /* Smaller padding for cards on very small screens */
+  }
+}
+

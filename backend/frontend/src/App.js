@@ -9,8 +9,9 @@ import AddMembers from "./components/Dashboard/AddMembers";
 import AddProject from "./components/Dashboard/AddProject";
 import AddTask from "./components/Dashboard/AddTask";
 import CreateProfile from "./components/Dashboard/CreateProfile";
-import Notifications from "./components/Dashboard/Notifications";
+
 import PrivateRoute from "./Routing/PrivateRoute";
+
 
 import "./main.css";
 
@@ -71,7 +72,7 @@ const App = () => (
     />
 
     <Route
-      path="/create-profile"
+      path="/profile"
       element={
         <PrivateRoute>
           <CreateProfile />
@@ -79,14 +80,7 @@ const App = () => (
       }
     />
 
-    <Route
-      path="/notifications"
-      element={
-        <PrivateRoute>
-          <Notifications />
-        </PrivateRoute>
-      }
-    />
+ 
   </Routes>
 );
 

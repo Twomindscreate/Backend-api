@@ -16,6 +16,7 @@ def register(request):
 
 @api_view(['POST'])
 def login(request):
+    
     username = request.data.get('username')
     password = request.data.get('password')
     try:
@@ -36,6 +37,7 @@ def login(request):
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def create_profile(request):
+    print(f"Request user: {request.user}") 
     serializer = ProfileSerializer(data=request.data)
     if serializer.is_valid():
         # Save with the user from the request
@@ -46,6 +48,7 @@ def create_profile(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_profile(request):
+    print(f"Request user: {request.user}") 
     try:
         profile = Profile.objects.get( user=request.user)
     except Profile.DoesNotExist:
@@ -57,6 +60,7 @@ def get_profile(request):
 @api_view(['PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_profile(request):
+    print(f"Request user: {request.user}") 
     try:
         profile = Profile.objects.get( user=request.user)
     except Profile.DoesNotExist:
@@ -71,6 +75,7 @@ def update_profile(request):
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def team_list_create(request):
+    print(f"Request user: {request.user}") 
     if request.method == 'GET':
         teams = Team.objects.all()
         serializer = TeamSerializer(teams, many=True)
@@ -85,6 +90,7 @@ def team_list_create(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def team_detail(request, pk):
+    print(f"Request user: {request.user}") 
     try:
         team = Team.objects.get(pk=pk)
     except Team.DoesNotExist:
@@ -106,6 +112,7 @@ def team_detail(request, pk):
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def member_list_create(request):
+    print(f"Request user: {request.user}") 
     if request.method == 'GET':
         members = Member.objects.all()
         serializer = MemberSerializer(members, many=True)
@@ -120,6 +127,7 @@ def member_list_create(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def member_detail(request, pk):
+    print(f"Request user: {request.user}") 
     try:
         member = Member.objects.get(pk=pk)
     except Member.DoesNotExist:
@@ -141,6 +149,7 @@ def member_detail(request, pk):
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def project_list_create(request):
+    print(f"Request user: {request.user}") 
     if request.method == 'GET':
         projects = Project.objects.all()
         serializer = ProjectSerializer(projects, many=True)
@@ -155,6 +164,7 @@ def project_list_create(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def project_detail(request, pk):
+    print(f"Request user: {request.user}") 
     try:
         project = Project.objects.get(pk=pk)
     except Project.DoesNotExist:
@@ -176,6 +186,7 @@ def project_detail(request, pk):
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def task_list_create(request):
+    print(f"Request user: {request.user}") 
     if request.method == 'GET':
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
@@ -190,6 +201,7 @@ def task_list_create(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([permissions.IsAuthenticated])
 def task_detail(request, pk):
+    print(f"Request user: {request.user}") 
     try:
         task = Task.objects.get(pk=pk)
     except Task.DoesNotExist:

@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }) => {
       </Sidebar>
     </>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/" />
   );
 };
 

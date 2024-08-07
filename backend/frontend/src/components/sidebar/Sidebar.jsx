@@ -1,5 +1,3 @@
-// *******************************************************************************************************
-
 import React, { useState, useContext } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -24,8 +22,8 @@ const Sidebar = ({ children }) => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     switch (tab) {
-      case "create-profile":
-        navigate("/create-profile");
+      case "profile":
+        navigate("/profile");
         break;
       case "dashboard":
         navigate("/dashboard");
@@ -39,14 +37,13 @@ const Sidebar = ({ children }) => {
       case "add-project":
         navigate("/add-projects");
         break;
-      case "notifications":
-        navigate("/notifications");
-        break;
+      
       case "add-members":
         navigate("/add-members");
         break;
       case "logout":
         logout();
+        navigate("/");
         break;
       default:
         break;
@@ -68,17 +65,17 @@ const Sidebar = ({ children }) => {
 
   return (
     <div className="app-container">
-      <Navbar bg="dark" variant="dark" className="navbar-custom">
-        <Button
+      <Navbar bg="dark" variant="dark" className="custom-navbar">
+        <Button 
           variant="dark"
           onClick={toggleSidebar}
           className="sidebar-toggle"
         >
           <i className="fas fa-bars"></i>
         </Button>
-        <Navbar.Brand href="#">Task Manager</Navbar.Brand>
+        <Navbar.Brand href="#" className="task-name">Task Manager</Navbar.Brand>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-          <div className="profile-icon">
+          <div className="profile-icon-wrapper">
             <img
               src={taskManagementImage}
               alt="User Profile"
@@ -89,89 +86,88 @@ const Sidebar = ({ children }) => {
         </OverlayTrigger>
       </Navbar>
       <div
-        className={`sidebar d-flex flex-column ${
+        className={`custom-sidebar d-flex flex-column ${
           expanded ? "expanded" : "collapsed"
         }`}
       >
-        <nav className="nav flex-column">
+        <nav className="sidebar-nav">
           <a
             href="#"
-            className={`nav-link ${activeTab === "dashboard" ? "active" : ""}`}
+            className={`nav-link-custom ${
+              activeTab === "dashboard" ? "active" : ""
+            }`}
             onClick={() => handleTabClick("dashboard")}
           >
-            <i className="fas fa-tachometer-alt icon"></i>
+            <i className="fas fa-tachometer-alt icon-custom"></i>
             {expanded && <span>Dashboard</span>}
           </a>
           <a
             href="#"
-            className={`nav-link ${activeTab === "add-team" ? "active" : ""}`}
+            className={`nav-link-custom ${
+              activeTab === "add-team" ? "active" : ""
+            }`}
             onClick={() => handleTabClick("add-team")}
           >
-            <i className="fas fa-users icon"></i>
+            <i className="fas fa-users icon-custom"></i>
             {expanded && <span>Add Team</span>}
           </a>
           <a
             href="#"
-            className={`nav-link ${activeTab === "add-task" ? "active" : ""}`}
+            className={`nav-link-custom ${
+              activeTab === "add-task" ? "active" : ""
+            }`}
             onClick={() => handleTabClick("add-task")}
           >
-            <i className="fas fa-tasks icon"></i>
+            <i className="fas fa-tasks icon-custom"></i>
             {expanded && <span>Add Task</span>}
           </a>
           <a
             href="#"
-            className={`nav-link ${
+            className={`nav-link-custom ${
               activeTab === "add-project" ? "active" : ""
             }`}
             onClick={() => handleTabClick("add-project")}
           >
-            <i className="fas fa-folder-plus icon"></i>
+            <i className="fas fa-folder-plus icon-custom"></i>
             {expanded && <span>Add Project</span>}
           </a>
+
           <a
             href="#"
-            className={`nav-link ${
-              activeTab === "notifications" ? "active" : ""
-            }`}
-            onClick={() => handleTabClick("notifications")}
-          >
-            <i className="fas fa-bell icon"></i>
-            {expanded && <span>Notifications</span>}
-          </a>
-          <a
-            href="#"
-            className={`nav-link ${
+            className={`nav-link-custom ${
               activeTab === "add-members" ? "active" : ""
             }`}
             onClick={() => handleTabClick("add-members")}
           >
-            <i className="fas fa-user-plus icon"></i>
+            <i className="fas fa-user-plus icon-custom"></i>
             {expanded && <span>Add Members</span>}
           </a>
+          
           <a
             href="#"
-            className={`nav-link ${
-              activeTab === "edit-profile" ? "active" : ""
+            className={`nav-link-custom ${
+              activeTab === "profile" ? "active" : ""
             }`}
-            onClick={() => handleTabClick("create-profile")}
+            onClick={() => handleTabClick("profile")}
           >
-            <i className="fas fa-user-edit icon"></i>
+            <i className="fas fa-user-edit icon-custom"></i>
             {expanded && <span>Profile</span>}
           </a>
+
         </nav>
-        <hr className="separator" />
+        <hr className="sidebar-separator" />
         <a
           href="#"
-          className={`nav-link logout-link ${
+          className={`nav-link-custom logout-link-custom ${
             activeTab === "logout" ? "active" : ""
           }`}
           onClick={() => handleTabClick("logout")}
         >
-          <i className="fas fa-sign-out-alt icon"></i>
+          <i className="fas fa-sign-out-alt icon-custom"></i>
           {expanded && <span>Logout</span>}
         </a>
       </div>
-      <div className="content">{children}</div>
+      <div className="content-area">{children}</div>
     </div>
   );
 };

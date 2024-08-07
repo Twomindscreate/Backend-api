@@ -1,0 +1,11 @@
+.typewriter {
+    font-family: "Courier New", Courier, monospace;
+  }
+  label {
+    text-align: start;
+    margin-bottom: 10px !important;
+
+  }
+  .DN{
+    color: red;
+  }

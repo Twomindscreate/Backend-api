@@ -1,0 +1,436 @@
+.tree {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-node {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin: 0.5rem;
+  position: relative;
+}
+
+.node-content {
+  display: inline-block;
+  position: relative;
+}
+
+.node-image img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.node-name {
+  margin-top: 0.5rem;
+}
+
+.node-children {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.node-children .tree-node {
+  margin-top: 2rem;
+}
+
+.tree .node-children {
+  position: relative;
+  padding-top: 2rem; /* Space for the connecting line */
+}
+
+.tree .node-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: #ccc;
+}
+
+.tree .tree-node::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: #ccc;
+}
+
+.tree .tree-node:first-child::after {
+  display: none;
+}
+
+.tree .node-children::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .node-image img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .node-name {
+    font-size: 0.9rem;
+  }
+
+  .tree-node {
+    margin: 0.2rem;
+  }
+
+  .node-children {
+    flex-direction: column;
+  }
+
+  .node-children .tree-node {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .node-image img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .node-name {
+    font-size: 0.8rem;
+  }
+
+  .tree-node {
+    margin: 0.1rem;
+  }
+
+  .node-children .tree-node {
+    margin-top: 0.5rem;
+  }
+}
+
+
+
+
+
+
+/* ------------------------------create project------------- */ 
+/* Animations */
+@keyframes slideDown {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Create Project Form */
+.create-project-form {
+  padding: 20px;
+  border-left: 1px solid #ccc; /* Divider line between image and form */
+  animation: slideUp 0.5s ease-out; /* Apply slideUp animation */
+}
+
+/* Project Image */
+.project-image {
+  margin-top: 4rem !important;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  /* Adding box shadow */
+  box-shadow: 0 2px 7px 2px rgba(157, 194, 250, 0.978);
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Create Project Card */
+.create-project-card {
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+.create-project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Project Card */
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 20px; /* Rounded corners */
+  overflow: hidden; /* Ensure content fits inside */
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .content {
+  padding: 20px;
+  height: 200px; /* Ensures cards have a consistent height */
+}
+
+
+
+
+/* ----------------------------------create profile---------------------------------------- */
+
+/* Tree Structure */
+.tree {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-node {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  margin: 0.5rem;
+  position: relative;
+}
+
+.node-content {
+  display: inline-block;
+  position: relative;
+}
+
+.node-image img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.node-name {
+  margin-top: 0.5rem;
+}
+
+.node-children {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.node-children .tree-node {
+  margin-top: 2rem;
+}
+
+.tree .node-children {
+  position: relative;
+  padding-top: 2rem; /* Space for the connecting line */
+}
+
+.tree .node-children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: #ccc;
+}
+
+.tree .tree-node::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 2rem;
+  background-color: #ccc;
+}
+
+.tree .tree-node:first-child::after {
+  display: none;
+}
+
+.tree .node-children::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* Responsive Tree Structure */
+@media (max-width: 768px) {
+  .node-image img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .node-name {
+    font-size: 0.9rem;
+  }
+
+  .tree-node {
+    margin: 0.2rem;
+  }
+
+  .node-children {
+    flex-direction: column;
+  }
+
+  .node-children .tree-node {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .node-image img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .node-name {
+    font-size: 0.8rem;
+  }
+
+  .tree-node {
+    margin: 0.1rem;
+  }
+
+  .node-children .tree-node {
+    margin-top: 0.5rem;
+  }
+}
+
+
+/* Create Project Section */
+@keyframes slideDown {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.create-project-form {
+  padding: 20px;
+  border-left: 1px solid #ccc; /* Divider line between image and form */
+  animation: slideUp 0.5s ease-out; /* Apply slideUp animation */
+}
+
+.project-image {
+  margin-top: 4rem !important;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  
+  box-shadow: 0 2px 7px 2px rgba(157, 194, 250, 0.978);
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+.filter-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-project-card {
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+.create-project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 20px; /* Rounded corners */
+  overflow: hidden; /* Ensure content fits inside */
+  animation: slideDown 0.5s ease-out; /* Apply slideDown animation */
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .content {
+  padding: 20px;
+  height: 200px; /* Ensures cards have a consistent height */
+}
+
+/* Responsive Create Project Section */
+@media (max-width: 768px) {
+  .create-project-form {
+    padding: 15px;
+  }
+
+  .project-image {
+    width: 80%;
+  }
+
+  .project-card .content {
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-project-form {
+    padding: 10px;
+  }
+
+  .project-image {
+    width: 70%;
+  }
+}
+
+
+
+
+
