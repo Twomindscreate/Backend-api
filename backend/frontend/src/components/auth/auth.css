@@ -27,7 +27,7 @@ Button {
 
 .ui.header {
   text-align: center;
-  color: #f5ab0a !important;
+  color: #f5ab0a;
 }
 
 .ui.message a {

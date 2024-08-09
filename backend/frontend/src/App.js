@@ -8,9 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import ForgetPassword from "./components/auth/ForgetPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
+import New from "./components/auth/New";
 
 import "semantic-ui-css/semantic.min.css";
-import "./App.css";
+
 import Register from "./components/auth/Register";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/otp/verify" element={<VerifyEmail />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/new" element={<New />} />
 
         <Route
           path="/password-reset-confirm/:uid/:token"

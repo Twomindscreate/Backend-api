@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { Form, Button, Icon, Header, Container } from "semantic-ui-react";
+import "./ForgetPassword.css";
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
 
@@ -32,26 +33,45 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="container">
-      <div>
-        <h1>Forget Password</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
+    <div className="forget-password-page">
+      <Container textAlign="center" className="form-container">
+        <Header icon className="form-header">
+          <h1>
+            <Icon name="lock" />
+            Forget Password
+          </h1>
+        </Header>
+        <Form onSubmit={handleSubmit} className="forget-password-form">
+          <Form.Field>
+            <label htmlFor="email" className="email-label">
+              <Icon name="mail outline" />
+              Email
+            </label>
             <input
               type="email"
-              className="form-control"
               id="email"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+              className="email-input"
             />
-          </div>
-          <button type="submit" className="btn btn-primary">
+          </Form.Field>
+          <Button
+            type="submit"
+            primary
+            fluid
+            icon
+            labelPosition="right"
+            loading={loading}
+            className="submit-button"
+          >
             {loading ? "Sending..." : "Send"}
-          </button>
-        </form>
-      </div>
+            <Icon name="send" />
+          </Button>
+        </Form>
+      </Container>
     </div>
   );
 };
