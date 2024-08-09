@@ -1,38 +1,48 @@
 import { useState } from "react";
-import { registerUser } from "../../api/userService";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const useRegister = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    repassword: "",
-  });
-
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    username: "",
+    password: "",
+    password2: "",
+  });
+  const [error, setError] = useState(" ");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleOnChange = (e) => {
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await registerUser(formData);
-      setMessage(response.data.message);
-      navigate("/login");
-    } catch (error) {
-      setMessage(error.response.data.repassword);
+      setLoading(true);
+      const response = await axios.post(
+        "http://localhost:8000/api/register/",
+        registerData
+      );
+      if (response.status === 201) {
+        navigate("/otp/verify");
+        toast.success("Registration successful, Please login");
+      }
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data);
+        setLoading(false);
+      }
     }
   };
 
   return {
-    formData,
-    handleChange,
-    handleSubmit,
-    message,
+    handleOnChange,
+    handleOnSubmit,
+    loading,
+    registerData,
   };
 };
 

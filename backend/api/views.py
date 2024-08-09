@@ -1,77 +1,165 @@
-from rest_framework import status, permissions
+from ast import Expression
+from multiprocessing import context
+from django.shortcuts import render
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework_simplejwt.tokens import RefreshToken # type: ignore
-from django.contrib.auth.hashers import check_password
-from .models import CustomUser, Profile, Team, Member, Project, Task
-from .serializers import CustomUserSerializer, ProfileSerializer, TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer
+from .models import OneTimePassword
+from .serializers import (PasswordResetRequestSerializer,LogoutUserSerializer, UserRegisterSerializer, LoginSerializer
+,SetNewPasswordSerializer,ProfileSerializer ,TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer)
+from rest_framework import status,permissions
+from .utils import send_generated_otp_to_email
+from rest_framework.decorators import api_view
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
+from .models import User, Profile, Team, Member, Project, Task
 
-@api_view(['POST'])
-def register(request):
-    serializer = CustomUserSerializer(data=request.data)
-    if serializer.is_valid():
-        user = serializer.save()
-        return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# Create your views here.
 
-@api_view(['POST'])
-def login(request):
-    
-    username = request.data.get('username')
-    password = request.data.get('password')
-    try:
-        user = CustomUser.objects.get(username=username)
-        if check_password(password, user.password):
-            refresh = RefreshToken.for_user(user)
+
+class RegisterView(GenericAPIView):
+    serializer_class = UserRegisterSerializer
+
+    def post(self, request):
+        user = request.data
+        serializer=self.serializer_class(data=user)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            user_data=serializer.data
+            send_generated_otp_to_email(user_data['email'], request)
             return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'user': str(user),
-                'user_id': user.id,
-            })
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-    except CustomUser.DoesNotExist:
-        return Response({'detail': 'User Does Not Exist.'}, status=status.HTTP_401_UNAUTHORIZED)
+                'data':user_data,
+                'message':'thanks for signing up a passcode has be sent to verify your email'
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+class VerifyUserEmail(GenericAPIView):
+    def post(self, request):
+        try:
+            passcode = request.data.get('otp')
+            user_pass_obj=OneTimePassword.objects.get(otp=passcode)
+            user=user_pass_obj.user
+            if not user.is_verified:
+                user.is_verified=True
+                user.save()
+                return Response({
+                    'message':'account email verified successfully'
+                }, status=status.HTTP_200_OK)
+            return Response({'message':'passcode is invalid user is already verified'}, status=status.HTTP_204_NO_CONTENT)
+        except OneTimePassword.DoesNotExist as identifier:
+            return Response({'message':'passcode not provided'}, status=status.HTTP_400_BAD_REQUEST)
+        
+@permission_classes([AllowAny])
+class LoginUserView(GenericAPIView):
+    serializer_class=LoginSerializer
+    def post(self, request):
+        serializer= self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        try:
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Profile.DoesNotExist:
+            return Response({'error': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def put(self, request):
+        try:
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            serializer = ProfileSerializer(profile, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Profile.DoesNotExist:
+            return Response({'error': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def post(self, request):
+        try:
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            serializer = ProfileSerializer(profile, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class PasswordResetRequestView(GenericAPIView):
+    serializer_class=PasswordResetRequestSerializer
+
+    def post(self, request):
+        serializer=self.serializer_class(data=request.data, context={'request':request})
+        serializer.is_valid(raise_exception=True)
+        return Response({'message':'we have sent you a link to reset your password'}, status=status.HTTP_200_OK)
+        # return Response({'message':'user with that email does not exist'}, status=status.HTTP_400_BAD_REQUEST)
     
 
-@api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
-def create_profile(request):
-    print(f"Request user: {request.user}") 
-    serializer = ProfileSerializer(data=request.data)
-    if serializer.is_valid():
-        # Save with the user from the request
-        serializer.save(user=request.user)
-        return Response({"message": "Profile created successfully"}, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def get_profile(request):
-    print(f"Request user: {request.user}") 
-    try:
-        profile = Profile.objects.get( user=request.user)
-    except Profile.DoesNotExist:
-        return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
-    
-    serializer = ProfileSerializer(profile)
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['PUT'])
-@permission_classes([permissions.IsAuthenticated])
-def update_profile(request):
-    print(f"Request user: {request.user}") 
-    try:
-        profile = Profile.objects.get( user=request.user)
-    except Profile.DoesNotExist:
-        return Response({"message": "Profile not found"}, status=status.HTTP_404_NOT_FOUND)
+class PasswordResetConfirm(GenericAPIView):
 
-    serializer = ProfileSerializer(profile, data=request.data, partial=True)
-    if serializer.is_valid():
+    def get(self, request, uidb64, token):
+        try:
+            user_id=smart_str(urlsafe_base64_decode(uidb64))
+            user=User.objects.get(id=user_id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response({'message':'token is invalid or has expired'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'success':True, 'message':'credentials is valid', 'uidb64':uidb64, 'token':token}, status=status.HTTP_200_OK)
+
+        except DjangoUnicodeDecodeError as identifier:
+            return Response({'message':'token is invalid or has expired'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class SetNewPasswordView(GenericAPIView):
+    serializer_class=SetNewPasswordSerializer
+
+    def patch(self, request):
+        serializer=self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({'success':True, 'message':"password reset is succesful"}, status=status.HTTP_200_OK)
+
+
+class TestingAuthenticatedReq(GenericAPIView):
+    permission_classes=[IsAuthenticated]
+
+    def get(self, request):
+
+        data={
+            'msg':'its works'
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+class LogoutApiView(GenericAPIView):
+    serializer_class=LogoutUserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer=self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"message": "Profile updated successfully"}, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        return Response(status=status.HTTP_204_NO_CONTENT)
+ 
+ 
 @api_view(['GET', 'POST'])
 @permission_classes([permissions.IsAuthenticated])
 def team_list_create(request):
@@ -219,4 +307,3 @@ def task_detail(request, pk):
     elif request.method == 'DELETE':
         task.delete()
         return Response({"message": "Task deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
-

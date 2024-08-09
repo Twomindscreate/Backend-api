@@ -1,11 +1,17 @@
 from django.contrib import admin
-from .models import CustomUser, Profile, Team, Member, Project, Task
+from .models import User, OneTimePassword, Profile, Team, Member, Project, Task
 
-@admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ( 'username', 'email', 'password')
+admin.site.register(User)
+admin.site.register(OneTimePassword)
 
-admin.site.register(Profile)
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        'user', 'username', 'phone_number', 'address', 'gender',
+        'occupation', 'department', 'role', 'birth_date', 'profile_picture'
+    )
+    search_fields = ('email', 'username', 'phone_number')
+    list_filter = ('gender', 'occupation', 'department', 'role')
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
     list_display = ( 'name', 'description')
