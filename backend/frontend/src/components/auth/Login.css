@@ -1,0 +1,38 @@
+/* Styling for the input fields with glowing effect */
+.input-field input {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.input-field input:focus {
+  border-color: #2185d0;
+  box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+/* Styling for the icons within the label */
+.input-field label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.input-field label .icon {
+  margin-right: 10px;
+}
+
+/* Styling for the "Forget Password" link */
+.pass-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.pass-link a {
+  color: #2185d0;
+  text-decoration: none;
+}
+
+.pass-link a:hover {
+  text-decoration: underline;
+}

@@ -47,40 +47,10 @@ const useLogin = () => {
     }
   };
 
-  const handleLogout = async () => {
-    const refresh = localStorage.getItem("refresh_token");
-    const token = localStorage.getItem("token");
-
-    try {
-      const response = await AxiosInstance.post(
-        "logout/",
-        { refresh_token: refresh },
-        { headers: { Authorization: `Bearer ${token}` } } // Add Authorization header
-      );
-
-      if (response.status === 200) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("user");
-        navigate("/login");
-        toast.warn("Logout successful");
-      }
-    } catch (error) {
-      console.error("Error during logout:", error);
-      if (error.response) {
-        toast.error(
-          error.response.data.detail || "An error occurred. Please try again."
-        );
-      } else {
-        toast.error("An error occurred. Please try again.");
-      }
-    }
-  };
-
   return {
     handleOnChange,
     handleOnSubmit,
-    handleLogout, // Ensure handleLogout is returned if used elsewhere
+
     loading,
     loginData,
   };
