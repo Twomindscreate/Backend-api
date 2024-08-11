@@ -1,20 +1,52 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-// import taskManagementImage from "../../assets/image/3.webp";
-// import { AuthContext } from "../../context/AuthContext";
-// import { ProfileContext } from "../../context/ProfileContext";
+import taskManagementImage from "../../assets/images/forget_otp.jpg";
+import { UserContext } from "../../context/ContextApi";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import AxiosInstance from "../../Api/AxiosInstance";
 import "./App.css";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
-  console.log("This is side bar");
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("");
 
+  const { userInfo } = useContext(UserContext);
+  console.log("--------------user info", userInfo);
+  const jwt = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("--------------user", user);
   const navigate = useNavigate();
-  // const { auth, logout } = useContext(AuthContext);
-  // const { profile } = useContext(ProfileContext);
+
+  useEffect(() => {
+    if (jwt === null && !user) {
+      navigate("/login");
+    } else {
+      getSomeData();
+    }
+  }, [jwt, user]);
+
+  const getSomeData = async () => {
+    const res = await AxiosInstance.get("get-something/");
+    console.log(res.data);
+  };
+
+  const refresh = JSON.parse(localStorage.getItem("refresh_token"));
+
+  const handleLogout = async () => {
+    const res = await AxiosInstance.post("logout/", {
+      refresh_token: refresh,
+    });
+    if (res.status === 204) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+      navigate("/login");
+      toast.warn("logout successful");
+    }
+  };
 
   const toggleSidebar = () => {
     setExpanded(!expanded);
@@ -24,28 +56,27 @@ const Sidebar = () => {
     setActiveTab(tab);
     switch (tab) {
       case "profile":
-        navigate("/profile");
+        navigate("/forget-password");
         break;
       case "dashboard":
         navigate("/dashboard");
         break;
       case "add-team":
-        navigate("/add-teams");
+        navigate("/forget-password");
         break;
       case "add-task":
-        navigate("/add-tasks");
+        navigate("/forget-password");
         break;
       case "add-project":
-        navigate("/add-projects");
+        navigate("/forget-password");
         break;
-
       case "add-members":
-        navigate("/add-members");
+        navigate("/forget-password");
         break;
-      // case "logout":
-      //   logout();
-      //   navigate("/");
-      //   break;
+      case "logout":
+        handleLogout();
+        navigate("/");
+        break;
       default:
         break;
     }
@@ -54,13 +85,15 @@ const Sidebar = () => {
   const popover = (
     <Popover id="popover-basic">
       <Popover.Header as="h3">User Details</Popover.Header>
-      {/* <Popover.Body>
-        <strong>Name:</strong> {auth?.user?.username || "Guest"}
+      <Popover.Body>
+        <strong>Name:</strong>{" "}
+        {user ? <p>{user.full_name}</p> : <p>Not available</p>}
         <br />
-        <strong>Email:</strong> {profile?.email || "N/A"}
+        <strong>Email:</strong>{" "}
+        {user ? <p>{user.email}</p> : <p>Not available</p>}
         <br />
-        <strong>Phone:</strong> {profile?.phone || "N/A"}
-      </Popover.Body> */}
+        <strong>Phone:</strong> <p>6556589556</p>
+      </Popover.Body>
     </Popover>
   );
 
@@ -78,14 +111,14 @@ const Sidebar = () => {
           Task Manager
         </Navbar.Brand>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-          {/* <div className="profile-icon-wrapper">
+          <div className="profile-icon-wrapper">
             <img
               src={taskManagementImage}
               alt="User Profile"
               className="rounded-circle img-thumbnail"
               style={{ width: "30px", height: "30px" }}
             />
-          </div> */}
+          </div>
         </OverlayTrigger>
       </Navbar>
       <div
@@ -134,7 +167,6 @@ const Sidebar = () => {
             <i className="fas fa-folder-plus icon-custom"></i>
             {expanded && <span>Add Project</span>}
           </a>
-
           <a
             href="#"
             className={`nav-link-custom ${
@@ -145,7 +177,6 @@ const Sidebar = () => {
             <i className="fas fa-user-plus icon-custom"></i>
             {expanded && <span>Add Members</span>}
           </a>
-
           <a
             href="#"
             className={`nav-link-custom ${
@@ -158,7 +189,7 @@ const Sidebar = () => {
           </a>
         </nav>
         <hr className="sidebar-separator" />
-        {/* <a
+        <a
           href="#"
           className={`nav-link-custom logout-link-custom ${
             activeTab === "logout" ? "active" : ""
@@ -167,7 +198,7 @@ const Sidebar = () => {
         >
           <i className="fas fa-sign-out-alt icon-custom"></i>
           {expanded && <span>Logout</span>}
-        </a> */}
+        </a>
       </div>
       {/* <div className="content-area">{children}</div> */}
     </div>

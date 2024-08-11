@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
+// import { UserContext } from "../../context/ContextApi";
 import AxiosInstance from "../../Api/AxiosInstance";
 import { toast } from "react-toastify";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
+  // console.log(useContext(UserContext));
+  // const { setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    // No setupAxiosInterceptors function anymore; remove this if it was previously used
-  }, [navigate]);
 
   const handleOnChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -35,16 +33,22 @@ const useLogin = () => {
           "refresh_token",
           JSON.stringify(response.data.refresh_token)
         );
+        // const response = response.data;
+        // const user = {
+        //   full_name: response.full_name,
+        //   email: response.email,
+        // };
+        // setUserInfo(user);
+        // localStorage.setItem("user", JSON.stringify(user)); // Save user info
+
         navigate("/dashboard");
-        toast.success("Login successfully");
+        toast.success("Login successful");
+      } else {
+        toast.error("Something went wrong");
       }
     } catch (error) {
-      console.error("Login error:", error); // Debugging error
-      if (error.response) {
-        toast.error(error.response.data.detail);
-      } else {
-        toast.error("An error occurred. Please try again.");
-      }
+      console.error("Login failed:", error);
+      toast.error("Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -80,9 +84,9 @@ const useLogin = () => {
   return {
     handleOnChange,
     handleOnSubmit,
-    handleLogout, // Ensure handleLogout is returned if used elsewhere
     loading,
     loginData,
+    // setUserInfo,
   };
 };
 
