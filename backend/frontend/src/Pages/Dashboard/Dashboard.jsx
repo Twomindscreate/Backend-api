@@ -1,10 +1,10 @@
 import React from "react";
+import Product from "./Product";
 
 const Dashboard = () => {
-  console.log("This is Dashoard ");
   return (
     <div>
-      <h1>Home page</h1>
+      <Product />
     </div>
   );
 };

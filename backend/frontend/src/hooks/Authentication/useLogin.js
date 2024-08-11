@@ -27,10 +27,13 @@ const useLogin = () => {
     try {
       const response = await AxiosInstance.post("login/", loginData);
       if (response.status === 200) {
-        localStorage.setItem("token", JSON.stringify(response.data.access));
+        localStorage.setItem(
+          "token",
+          JSON.stringify(response.data.access_token)
+        );
         localStorage.setItem(
           "refresh_token",
-          JSON.stringify(response.data.refresh)
+          JSON.stringify(response.data.refresh_token)
         );
         navigate("/dashboard");
         toast.success("Login successfully");
@@ -50,7 +53,7 @@ const useLogin = () => {
   const handleLogout = async () => {
     const refresh = localStorage.getItem("refresh_token");
     const token = localStorage.getItem("token");
-
+    console.log("------logout");
     try {
       const response = await AxiosInstance.post(
         "logout/",
@@ -67,13 +70,10 @@ const useLogin = () => {
       }
     } catch (error) {
       console.error("Error during logout:", error);
-      if (error.response) {
-        toast.error(
-          error.response.data.detail || "An error occurred. Please try again."
-        );
-      } else {
-        toast.error("An error occurred. Please try again.");
-      }
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+      navigate("/login");
     }
   };
 
