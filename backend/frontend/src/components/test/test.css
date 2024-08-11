@@ -1,0 +1,74 @@
+.otp-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height to ensure centering */
+  width: 100vw; /* Full viewport width */
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+}
+.mg {
+  margin: 0;
+  padding: 0px;
+  display: flex;
+  height: 100vh;
+}
+.otp-card {
+  padding: 30px !important;
+  width: 400px !important;
+
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  animation: slide-up 0.8s ease-out;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.otp-input-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.otp-input {
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  font-size: 1.5em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin: 0 5px;
+}
+
+.otp-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+.verify-button {
+  margin-top: 20px;
+  font-size: 1.2em;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.verify-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
