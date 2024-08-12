@@ -19,9 +19,9 @@
   background-color: #e1e6ea;
 }
 .sidebar-toggle {
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #3d68f5;
+  font-size: 1.5rem !important;
+  cursor: pointer !important;
+  color: #3d68f5 !important;
 }
 
 /* Styling for the profile icon */

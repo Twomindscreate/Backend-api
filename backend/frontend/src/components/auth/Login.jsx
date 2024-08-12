@@ -7,13 +7,11 @@ const Login = () => {
   const { handleOnChange, handleOnSubmit, loading, loginData } = useLogin();
 
   return (
-    <div className="forget-password-page">
-      <Container textAlign="center" className="form-container">
-        <Header icon className="form-header">
-          <h1>
-            <Icon name="lock" />
-            Login
-          </h1>
+    <div className="bg_image">
+      <div className="trans-card">
+        <Header as="h1">
+          <Icon name="lock" />
+          Login
         </Header>
         <Form onSubmit={handleOnSubmit}>
           <Form.Field className="input-field">
@@ -55,7 +53,7 @@ const Login = () => {
             icon
             labelPosition="right"
             loading={loading}
-            className="submit-button"
+            className="verify-button"
           >
             {loading ? "Loading..." : "Login"}
             <Icon name="send" />
@@ -72,7 +70,7 @@ const Login = () => {
             </Link>
           </p>
         </Form>
-      </Container>
+      </div>
     </div>
   );
 };
