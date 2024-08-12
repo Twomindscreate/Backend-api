@@ -4,9 +4,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation } from "react-router-dom";
 import useLogin from "../hooks/Authentication/useLogin";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const { handleLogout } = useLogin();
+  const products = useSelector((state) => state.cart);
+  console.log("---products", products);
+  const userDetails = JSON.parse(localStorage.getItem("user"));
+  console.log(userDetails);
   const { pathname } = useLocation();
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -28,6 +33,13 @@ const NavBar = () => {
             Dashboard
           </Nav.Link>
           <Nav.Link
+            to="/cart"
+            as={Link}
+            className={pathname.includes("/teams") ? "active" : ""}
+          >
+            Cart
+          </Nav.Link>
+          <Nav.Link
             to="/teams"
             as={Link}
             className={pathname.includes("/teams") ? "active" : ""}
@@ -45,15 +57,10 @@ const NavBar = () => {
         <Navbar.Toggle />
 
         <Navbar.Collapse className="justify-content-end">
-          <NavDropdown title="Profile" id="basic-nav-dropdown">
+          <NavDropdown title={userDetails} id="basic-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
             <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
           </NavDropdown>
-          {/* <Navbar.Text>
-            <Nav.Link to="/profile" as={Link}>
-              Profile
-            </Nav.Link>
-          </Navbar.Text> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

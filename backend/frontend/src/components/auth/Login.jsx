@@ -1,50 +1,75 @@
 import useLogin from "../../hooks/Authentication/useLogin";
 import { Link } from "react-router-dom";
+import { Button, Form, Header, Container, Icon } from "semantic-ui-react";
+import "./ForgetPassword.css"; // Make sure to create and import the CSS file
 
 const Login = () => {
   const { handleOnChange, handleOnSubmit, loading, loginData } = useLogin();
 
-  // const { email, password } = useState;
-
   return (
-    <div>
-      {/* login form with email and password input fields */}
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6 offset-md-3">
-            <h1 className="text-center">Login</h1>
-            <form onSubmit={handleOnSubmit}>
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={loginData.email}
-                  onChange={handleOnChange}
-                  className="form-control"
-                  placeholder="Enter email"
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={loginData.password}
-                  onChange={handleOnChange}
-                  className="form-control"
-                  placeholder="Enter password"
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">
-                {loading ? "Loading..." : "Login"}
-              </button>
-              <p className="pass-link">
-                <Link to="/forget-password">Forget Password</Link>
-              </p>
-            </form>
-          </div>
-        </div>
+    <div className="bg_image">
+      <div className="trans-card">
+        <Header as="h1">
+          <Icon name="lock" />
+          Login
+        </Header>
+        <Form onSubmit={handleOnSubmit}>
+          <Form.Field className="input-field">
+            <Form.Field>
+              <label htmlFor="email" className="email-label">
+                <Icon name="mail outline" />
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleOnChange}
+                placeholder="Enter email"
+                required
+                className="email-input"
+              />
+            </Form.Field>
+
+            <label htmlFor="password" className="password-label">
+              <Icon name="lock outline" /> Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleOnChange}
+              placeholder="Enter password"
+              required
+              className="email-input"
+            />
+          </Form.Field>
+
+          <Button
+            type="submit"
+            primary
+            fluid
+            icon
+            labelPosition="right"
+            loading={loading}
+            className="verify-button"
+          >
+            {loading ? "Loading..." : "Login"}
+            <Icon name="send" />
+          </Button>
+          <p className="pass-link">
+            <Link
+              to="/forget-password"
+              style={{
+                color: "Red ",
+                textDecoration: "none",
+              }}
+            >
+              Forget Password
+            </Link>
+          </p>
+        </Form>
       </div>
     </div>
   );

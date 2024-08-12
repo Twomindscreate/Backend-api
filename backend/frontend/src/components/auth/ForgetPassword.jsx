@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Form, Button, Icon, Header, Container } from "semantic-ui-react";
-import "./ForgetPassword.css";
+import { Form, Button, Icon, Header, Card } from "semantic-ui-react";
+
 const ForgetPassword = () => {
   const [loading, setLoading] = useState(false);
 
@@ -33,13 +33,11 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="forget-password-page">
-      <Container textAlign="center" className="form-container">
-        <Header icon className="form-header">
-          <h1>
-            <Icon name="lock" />
-            Forget Password
-          </h1>
+    <div className="bg_image">
+      <Card centered className="trans-card">
+        <Header as="h2">
+          <Icon name="lock" />
+          Forget Password
         </Header>
         <Form onSubmit={handleSubmit} className="forget-password-form">
           <Form.Field>
@@ -55,7 +53,6 @@ const ForgetPassword = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="email-input"
             />
           </Form.Field>
           <Button
@@ -65,13 +62,13 @@ const ForgetPassword = () => {
             icon
             labelPosition="right"
             loading={loading}
-            className="submit-button"
+            className="verify-button"
           >
             {loading ? "Sending..." : "Send"}
             <Icon name="send" />
           </Button>
         </Form>
-      </Container>
+      </Card>
     </div>
   );
 };

@@ -11,6 +11,7 @@ const Cart = () => {
   const removeToCart = (product) => {
     dispatch(remove(product.id));
   };
+
   const carts = proudcts?.map((product) => (
     <div className="col-md-3 mb-4" key={product.id}>
       <Card style={{ width: "18rem" }} className="h-100">

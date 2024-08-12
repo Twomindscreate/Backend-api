@@ -35,36 +35,34 @@ const ResetPassword = () => {
     }
   };
   return (
-    <div>
-      <div className="form-container">
-        <div className="wrapper" style={{ width: "100%" }}>
-          <h2>Enter your New Password</h2>
-          <form action="" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="">New Password:</label>
-              <input
-                type="text"
-                className="email-form"
-                name="password"
-                value={password}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="">Confirm Password</label>
-              <input
-                type="text"
-                className="email-form"
-                name="confirm_password"
-                value={confirm_password}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" className="vbtn">
-              Submit
-            </button>
-          </form>
-        </div>
+    <div className="bg_image">
+      <div className="trans-card">
+        <h2>Enter your New Password</h2>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="">New Password:</label>
+            <input
+              type="text"
+              className="email-form"
+              name="password"
+              value={password}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="">Confirm Password</label>
+            <input
+              type="text"
+              className="email-form"
+              name="confirm_password"
+              value={confirm_password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit" className="verify-button">
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );

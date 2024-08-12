@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,15 +21,21 @@ const Product = () => {
   }, []);
 
   if (isLoading) {
-    return <p>Loading....</p>;
+    return (
+      <div className="center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
   }
   if (isError) {
     return <p>Something went wrong.</p>;
   }
+
   const addToCart = (product) => {
     // dispatch add action
     dispatch(add(product));
   };
+
   const cards = products.map((product) => (
     <div className="col-md-3 mb-4" key={product.id}>
       <Card style={{ width: "18rem" }} className="h-100">
@@ -51,10 +58,10 @@ const Product = () => {
       </Card>
     </div>
   ));
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-center">My Products</h1>
-
       <div className="row">{cards}</div>
     </div>
   );

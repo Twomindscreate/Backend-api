@@ -154,3 +154,75 @@ nav a.active {
   transform: translate(-50%, -50%);
 
 }
+.header {
+  color: #452212 !important;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace !important;
+}
+.bg_image {
+  background-image: url("./assets/images/forget_otp.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+
+  justify-content: center !important;
+  font-family: Arial, sans-serif !important;
+}
+
+.trans-card {
+  padding: 30px !important;
+  width: 100% !important; /* Responsive width */
+  max-width: 600px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ) !important; /* Slight white background with transparency */
+  backdrop-filter: blur(10px) !important; /* Apply blur effect */
+  -webkit-backdrop-filter: blur(10px) !important; /* Support for Safari */
+}
+
+input::placeholder {
+  color: #a5582c !important;
+}
+
+input {
+  padding: 10px !important;
+  border: none !important;
+  background-color: transparent !important;
+  color: black !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid black !important;
+}
+.icons {
+  color: #a5582c !important;
+}
+
+label {
+  color: #452212 !important;
+  font-size: 1rem !important;
+}
+
+.verify-button {
+  margin-top: 20px !important;
+  font-size: 1.2em !important;
+  padding: 10px !important;
+  border-radius: 8px !important;
+  background-color: #452212 !important;
+  color: #fff !important;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out !important;
+  box-shadow: 0.3s ease-in-out !important;
+}
+
+.verify-button:hover {
+  background-color: #a5582c !important;
+
+  box-shadow: 0 0 15px #a5582c !important;
+}

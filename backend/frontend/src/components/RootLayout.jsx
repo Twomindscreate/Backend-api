@@ -6,14 +6,12 @@ import store from "../store/store";
 
 const RootLayout = () => {
   return (
-    <>
-      <Provider store={store}>
-        <NavBar />
-        <main>
-          <Outlet />
-        </main>
-      </Provider>
-    </>
+    <Provider store={store}>
+      <NavBar />
+      <main>
+        <Outlet />
+      </main>
+    </Provider>
   );
 };
 

@@ -16,6 +16,7 @@ import Tasks from "../Pages/Tasks";
 import Teams from "../Pages/Teams";
 import NotFound from "./NotFound";
 import ProtectedRoute from "./ProtectedRoute";
+import Cart from "../Pages/Dashboard/Cart";
 
 function PageRoutes() {
   const router = createBrowserRouter(
@@ -38,7 +39,7 @@ function PageRoutes() {
                 <Dashboard />
               </ProtectedRoute>
             }
-          ></Route>
+          />
           <Route
             path="/dashboard"
             element={
@@ -46,7 +47,7 @@ function PageRoutes() {
                 <Dashboard />
               </ProtectedRoute>
             }
-          ></Route>
+          />
           <Route
             path="/tasks"
             element={
@@ -54,7 +55,7 @@ function PageRoutes() {
                 <Tasks />
               </ProtectedRoute>
             }
-          ></Route>
+          />
           <Route
             path="/teams"
             element={
@@ -62,7 +63,15 @@ function PageRoutes() {
                 <Teams />
               </ProtectedRoute>
             }
-          ></Route>
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="*" element={<NotFound />} />
       </>
