@@ -1,6 +1,6 @@
 import useLogin from "../../hooks/Authentication/useLogin";
 import { Link } from "react-router-dom";
-import { Button, Form, Header, Container, Icon } from "semantic-ui-react";
+import { Button, Form, Header, Icon } from "semantic-ui-react";
 import "./ForgetPassword.css"; // Make sure to create and import the CSS file
 
 const Login = () => {

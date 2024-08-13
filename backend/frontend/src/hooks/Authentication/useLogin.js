@@ -41,7 +41,7 @@ const useLogin = () => {
         setUserInfo(user);
         localStorage.setItem("user", JSON.stringify(user)); // Save user info
 
-        await navigate("/dashboard");
+        navigate("/dashboard");
         toast.success("Login successful");
       } else {
         toast.error("Something went wrong");

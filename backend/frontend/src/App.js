@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/auth/Login";
-import VerifyEmail from "./components/auth/VerifyEmail";
+import Login from "./components/Auth/Login";
+import VerifyEmail from "./components/Auth/VerifyEmail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForgetPassword from "./components/auth/ForgetPassword";
+import ForgetPassword from "./components/Auth/ForgetPassword";
 import Test from "./components/test/Test";
-import ResetPassword from "./components/auth/ResetPassword";
+import ResetPassword from "./components/Auth/ResetPassword";
 import "semantic-ui-css/semantic.min.css";
-import Register from "./components/auth/Register";
+import HomePage from "./pages/HomePage";
 import { useState } from "react";
 import { UserContext } from "./context/ContextApi";
-import Sidebar from "./components/Dashboard/Sidebar";
-import EnterNewPassword from "./components/auth/EnterNewPassword";
+import Sidebar from "./components/Sidebar/Sidebar";
+import EnterNewPassword from "./components/Auth/EnterNewPassword";
 import "./App.css";
 function App() {
   const [userInfo, setUserInfo] = useState();
@@ -23,7 +23,7 @@ function App() {
           <Router>
             <ToastContainer />
             <Routes>
-              <Route path="/" element={<Register />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/otp/verify" element={<VerifyEmail />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
