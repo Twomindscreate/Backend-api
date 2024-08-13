@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import { OverlayTrigger, Popover, Navbar, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import taskManagementImage from "../../assets/images/forget_otp.jpg";
-
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import AxiosInstance from "../../Api/AxiosInstance";
 import "./Sidebar.css";
 import { toast } from "react-toastify";
-
 import Register from "../Auth/Register";
 import Login from "../Auth/Login";
-
 import ForgetPassword from "../Auth/ForgetPassword";
 import ResetPassword from "../Auth/ResetPassword";
 import CreateProject from "../Project/CreateProject";
 import DisplayProfile from "../Profile/DisplayProfile";
-import Dashboard from "../Dashboard/Dashboard";
+import Dashboard from "../../pages/Dashboard/Dashboard";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);

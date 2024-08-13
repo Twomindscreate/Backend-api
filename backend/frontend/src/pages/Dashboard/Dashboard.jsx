@@ -2,8 +2,7 @@ import React from "react";
 import { Container, Grid, Card, Table, Segment } from "semantic-ui-react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto"; // Ensure chart.js is auto-registered
-import "../main.css"; // Custom CSS for the tree
-
+import "../../components/main.css";
 const dummyData = {
   cards: [
     { title: "Card 1", description: "Description for card 1" },

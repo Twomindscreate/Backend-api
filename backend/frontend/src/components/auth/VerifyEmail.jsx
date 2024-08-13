@@ -3,7 +3,6 @@ import { Card, Header, Button, Form, Message, Icon } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "../test/test.css"; // Import your custom CSS
 
 const OTPVerification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]); // Array to hold OTP digits

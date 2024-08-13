@@ -1,19 +1,19 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Auth/Login";
-import VerifyEmail from "./components/Auth/VerifyEmail";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForgetPassword from "./components/Auth/ForgetPassword";
-import Test from "./components/test/Test";
-import ResetPassword from "./components/Auth/ResetPassword";
+import HomePage from "./pages/HomePage.jsx";
+import VerifyEmail from "./components/Auth/VerifyEmail.jsx";
+import ForgetPassword from "./components/Auth/ForgetPassword.jsx";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import EnterNewPassword from "./components/Auth/EnterNewPassword.jsx";
+import ResetPassword from "./components/Auth/ResetPassword.jsx";
+import Login from "./components/Auth/Login.jsx";
 import "semantic-ui-css/semantic.min.css";
-import HomePage from "./pages/HomePage";
 import { useState } from "react";
 import { UserContext } from "./context/ContextApi";
-import Sidebar from "./components/Sidebar/Sidebar";
-import EnterNewPassword from "./components/Auth/EnterNewPassword";
 import "./App.css";
+
 function App() {
   const [userInfo, setUserInfo] = useState();
   return (
@@ -27,7 +27,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/otp/verify" element={<VerifyEmail />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/test" element={<Test />} />
               <Route path="/dashboard" element={<Sidebar />} />
               <Route path="/new" element={<EnterNewPassword />} />
 
