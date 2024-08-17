@@ -116,41 +116,50 @@ const ProjectPage = () => {
 
   return (
     <Container>
-      <Header as="h1" textAlign="center">
-        My Projects
-      </Header>
-      <div className="filter-buttons">
-        <Button onClick={() => handleFilterChange("All")}>All</Button>
-        <Button onClick={() => handleFilterChange("Pending")}>Pending</Button>
-        <Button onClick={() => handleFilterChange("Complete")}>Complete</Button>
-        <Button onClick={() => handleFilterChange("In Progress")}>
-          In Progress
-        </Button>
-      </div>
       {!showCreateProject ? (
-        <Card.Group>
-          <Card
-            className="create-project-card"
-            onClick={handleCreateProjectClick}
-          >
-            <Card.Content>
-              <Icon name="add circle" size="huge" />
-              <Card.Header>Create New Project</Card.Header>
-            </Card.Content>
-          </Card>
-          {filteredProjects.map((project, index) => (
-            <Card className="project-card" key={index}>
+        <>
+          <Header as="h1" textAlign="center">
+            My Projects
+          </Header>
+          <div className="filter-buttons">
+            <Button onClick={() => handleFilterChange("All")}>All</Button>
+            <Button onClick={() => handleFilterChange("Pending")}>
+              Pending
+            </Button>
+            <Button onClick={() => handleFilterChange("Complete")}>
+              Complete
+            </Button>
+            <Button onClick={() => handleFilterChange("In Progress")}>
+              In Progress
+            </Button>
+          </div>
+
+          <Card.Group>
+            <Card
+              className="create-project-card"
+              onClick={handleCreateProjectClick}
+            >
               <Card.Content>
-                <Card.Header>{project.name}</Card.Header>
-                <Card.Meta>
-                  <span className="date">Start Date: {project.start_date}</span>
-                  <span className="date">End Date: {project.end_date}</span>
-                </Card.Meta>
-                <Card.Description>{project.description}</Card.Description>
+                <Icon name="add circle" size="huge" />
+                <Card.Header>Create New Project</Card.Header>
               </Card.Content>
             </Card>
-          ))}
-        </Card.Group>
+            {filteredProjects.map((project, index) => (
+              <Card className="project-card" key={index}>
+                <Card.Content>
+                  <Card.Header>{project.name}</Card.Header>
+                  <Card.Meta>
+                    <span className="date">
+                      Start Date: {project.start_date}
+                    </span>
+                    <span className="date">End Date: {project.end_date}</span>
+                  </Card.Meta>
+                  <Card.Description>{project.description}</Card.Description>
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
+        </>
       ) : (
         <Grid stackable>
           <Grid.Row>
