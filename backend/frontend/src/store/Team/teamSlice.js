@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../../Api/AxiosInstance";
 import { toast } from "react-toastify";
 
-// Create team api call.
+// Create team API call
 export const createTeam = createAsyncThunk(
   "team/createTeam",
   async (teamData, { rejectWithValue }) => {
@@ -13,36 +13,33 @@ export const createTeam = createAsyncThunk(
     } catch (err) {
       const error = err.response ? err.response.data : "Error Creating Team";
       toast.error(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
-//Update team api call
+// Update team API call
 export const updateTeam = createAsyncThunk(
   "team/updateTeam",
-  async ({ teamData }, { rejectWithValue }) => {
+  async ({ id, teamData }, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.put(
-        "`teams/${teamData.id}",
-        teamData
-      );
+      const response = await AxiosInstance.put(`teams/${id}/`, teamData);
       toast.success("Team updated successfully");
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Updating Team";
       toast.error(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
-// Fetch teams api call
+// Fetch teams API call
 export const fetchTeam = createAsyncThunk(
   "team/fetchTeam",
-  async ({ rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.get("teams/");
+      const response = await AxiosInstance.get(`teams/${id}/`);
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Fetching Teams";
@@ -52,13 +49,28 @@ export const fetchTeam = createAsyncThunk(
   }
 );
 
-// Delete team api call
+// Delete team API call
+export const deleteTeam = createAsyncThunk(
+  "team/deleteTeam",
+  async (teamId, { rejectWithValue }) => {
+    try {
+      await AxiosInstance.delete(`teams/${teamId}/`);
+      toast.success("Team deleted successfully");
+      return teamId;
+    } catch (err) {
+      const error = err.response ? err.response.data : "Error Deleting Team";
+      toast.error(error);
+      return rejectWithValue(err);
+    }
+  }
+);
+
 const teamSlice = createSlice({
   name: "team",
   initialState: {
     team: null,
-    error: null,
     loading: false,
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -69,13 +81,11 @@ const teamSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-
       .addCase(createTeam.fulfilled, (state, action) => {
         state.loading = false;
         state.team = action.payload;
         state.error = null;
       })
-
       .addCase(createTeam.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
@@ -86,47 +96,43 @@ const teamSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-
       .addCase(updateTeam.fulfilled, (state, action) => {
         state.loading = false;
         state.team = action.payload;
         state.error = null;
       })
-
       .addCase(updateTeam.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      //Fetch Teams
+      // Fetch team
       .addCase(fetchTeam.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-
       .addCase(fetchTeam.fulfilled, (state, action) => {
         state.loading = false;
         state.team = action.payload;
         state.error = null;
       })
-
       .addCase(fetchTeam.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // Delete Team
+      // Delete team
       .addCase(deleteTeam.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-
       .addCase(deleteTeam.fulfilled, (state, action) => {
         state.loading = false;
-        state.team = state.team.filter((team) => team.id !== action.payload);
+        if (state.team) {
+          state.team = state.team.filter((team) => team.id !== action.payload);
+        }
         state.error = null;
       })
-
       .addCase(deleteTeam.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;

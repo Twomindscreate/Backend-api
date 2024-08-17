@@ -6,13 +6,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import AxiosInstance from "../../Api/AxiosInstance";
 import "./Sidebar.css";
 import { toast } from "react-toastify";
-import Register from "../Auth/Register";
+import CreateUpdate from "../Team/CreateUpdate";
 import Login from "../Auth/Login";
 import ForgetPassword from "../Auth/ForgetPassword";
 import ResetPassword from "../Auth/ResetPassword";
 import CreateProject from "../Project/CreateProject";
 import DisplayProfile from "../Profile/DisplayProfile";
 import Dashboard from "../../pages/Dashboard/Dashboard";
+import TeamCreateUpdateComponent from "../Team/CreateUpdate";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -62,7 +63,7 @@ const Sidebar = () => {
       case "dashboard":
         return <Dashboard />;
       case "add-team":
-        return <Register />;
+        return <CreateUpdate />;
       case "add-task":
         return <ResetPassword />;
       case "add-project":
