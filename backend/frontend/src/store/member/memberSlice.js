@@ -72,7 +72,7 @@ export const deleteMember = createAsyncThunk(
 const memberSlice = createSlice({
   name: "member",
   initialState: {
-    members: null,
+    member: null,
     loading: false,
     error: null,
   },

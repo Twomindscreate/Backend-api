@@ -18,44 +18,6 @@ const useLogin = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  // const handleOnSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     const response = await AxiosInstance.post("login/", loginData);
-
-  //     if (response.status === 200) {
-  //       const user = {
-  //         full_name: response.data.full_name,
-  //         email: response.data.email,
-  //       };
-
-  //       localStorage.setItem(
-  //         "token",
-  //         JSON.stringify(response.data.access_token)
-  //       );
-  //       localStorage.setItem(
-  //         "refresh_token",
-  //         JSON.stringify(response.data.refresh_token)
-  //       );
-
-  //       dispatch(loginUser(user)); // Dispatch action to update user info in Redux
-  //       localStorage.setItem("user", JSON.stringify(user)); // Save user info
-
-  //       navigate("/dashboard");
-  //       toast.success("Login successful");
-  //     } else {
-  //       toast.error("Something went wrong");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login failed:", error);
-  //     toast.error("Login failed. Please try again.");
-  //   } finally {
-  //     setLoading(false); // Ensure loading state is reset
-  //   }
-  // };
-
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

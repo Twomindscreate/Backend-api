@@ -69,15 +69,10 @@ const useTeamCRUD = () => {
     }
   };
 
-  const handleFetchTeam = async (id) => {
-    if (!id) {
-      toast.error("Team ID is missing");
-      return;
-    }
-
+  const handleFetchTeam = async () => {
     setLoading(true);
     try {
-      const response = await AxiosInstance.get(`teams/${id}/`);
+      const response = await AxiosInstance.get(`teams/`);
       if (response.status === 200) {
         dispatch(fetchTeam(response.data));
       } else {

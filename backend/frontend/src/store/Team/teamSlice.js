@@ -37,9 +37,9 @@ export const updateTeam = createAsyncThunk(
 // Fetch teams API call
 export const fetchTeam = createAsyncThunk(
   "team/fetchTeam",
-  async (id, { rejectWithValue }) => {
+  async ({ rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.get(`teams/${id}/`);
+      const response = await AxiosInstance.get(`teams/`);
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Fetching Teams";

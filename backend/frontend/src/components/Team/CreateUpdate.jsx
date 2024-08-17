@@ -12,7 +12,7 @@ const CreateUpdate = () => {
     handleInputChange,
     teamData,
     setTeamData,
-    teamId,
+
     setTeamId,
   } = useTeamCRUD();
 
@@ -87,7 +87,9 @@ const CreateUpdate = () => {
                 <td>{team.name}</td>
                 <td>{team.description}</td>
                 <td>
-                  <button onClick={() => handleEditClick(team)}>Update</button>
+                  <button onClick={() => handleEditClick(team.id)}>
+                    Update
+                  </button>
                   <button onClick={() => handleDeleteClick(team.id)}>
                     Delete
                   </button>
