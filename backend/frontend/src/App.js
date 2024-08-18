@@ -10,6 +10,7 @@ import EnterNewPassword from "./components/Auth/EnterNewPassword.jsx";
 import ResetPassword from "./components/Auth/ResetPassword.jsx";
 import Login from "./components/Auth/Login.jsx";
 import "semantic-ui-css/semantic.min.css";
+import Register from "./components/Auth/Register.jsx";
 
 import "./App.css";
 
@@ -21,6 +22,7 @@ function App() {
           <ToastContainer />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/otp/verify" element={<VerifyEmail />} />
             <Route path="/forget-password" element={<ForgetPassword />} />

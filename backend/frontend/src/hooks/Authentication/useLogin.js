@@ -1,12 +1,10 @@
-import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { loginUser } from "../../store/auth/authSlice"; // Adjust import based on your actual setup
+
 import AxiosInstance from "../../Api/AxiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({
@@ -23,16 +21,22 @@ const useLogin = () => {
     setLoading(true);
 
     try {
-      const response = await AxiosInstance.post("login/", loginData);
+      const res = await AxiosInstance.post("login/", loginData);
 
-      if (response.status === 200) {
-        const { access_token, refresh_token, full_name, email } = response.data;
+      if (res.status === 200) {
+        const response = res.data;
+        const user = {
+          full_name: response.full_name,
+          email: response.email,
+        };
 
-        localStorage.setItem("token", JSON.stringify(access_token));
-        localStorage.setItem("refresh_token", JSON.stringify(refresh_token));
+        localStorage.setItem("token", JSON.stringify(response.access_token));
+        localStorage.setItem(
+          "refresh_token",
+          JSON.stringify(response.refresh_token)
+        );
 
-        // Optionally update the Redux store if needed
-        dispatch(loginUser({ full_name, email }));
+        localStorage.setItem("user", JSON.stringify(user)); // Save user info
 
         navigate("/dashboard");
         toast.success("Login successful");
@@ -43,7 +47,7 @@ const useLogin = () => {
       console.error("Login failed:", error);
       toast.error("Login failed. Please try again.");
     } finally {
-      setLoading(false);
+      setLoading(false); // Ensure loading state is reset
     }
   };
 
