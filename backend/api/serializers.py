@@ -196,19 +196,19 @@ class ProfileSerializer(serializers.ModelSerializer):
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = [ 'name', 'description', 'created_at']
+        fields = [ 'id', 'name', 'description', 'created_at']
 
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ['user', 'team', 'role', 'joined_at']
+        fields = [ 'id','user', 'team', 'role', 'joined_at']
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = [ 'name', 'description', 'team', 'start_date', 'end_date', 'created_at']
+        fields = [ 'id', 'name', 'description', 'team', 'start_date', 'end_date', 'created_at']
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']
+        fields = ['id','title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']
