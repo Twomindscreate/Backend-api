@@ -37,14 +37,14 @@ export const updateTeam = createAsyncThunk(
 // Fetch teams API call
 export const fetchTeam = createAsyncThunk(
   "team/fetchTeam",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.get(`teams/`);
+      const response = await AxiosInstance.get("teams/");
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Fetching Teams";
       toast.error(error);
-      return rejectWithValue(err);
+      return rejectWithValue(error);
     }
   }
 );
@@ -60,7 +60,7 @@ export const deleteTeam = createAsyncThunk(
     } catch (err) {
       const error = err.response ? err.response.data : "Error Deleting Team";
       toast.error(error);
-      return rejectWithValue(err);
+      return rejectWithValue(error);
     }
   }
 );
@@ -68,14 +68,13 @@ export const deleteTeam = createAsyncThunk(
 const teamSlice = createSlice({
   name: "team",
   initialState: {
-    team: null,
+    team: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-
       // Create team
       .addCase(createTeam.pending, (state) => {
         state.loading = true;
@@ -83,7 +82,7 @@ const teamSlice = createSlice({
       })
       .addCase(createTeam.fulfilled, (state, action) => {
         state.loading = false;
-        state.team = action.payload;
+        state.team = [...state.team, action.payload];
         state.error = null;
       })
       .addCase(createTeam.rejected, (state, action) => {
@@ -98,7 +97,9 @@ const teamSlice = createSlice({
       })
       .addCase(updateTeam.fulfilled, (state, action) => {
         state.loading = false;
-        state.team = action.payload;
+        state.team = state.team.map((team) =>
+          team.id === action.payload.id ? action.payload : team
+        );
         state.error = null;
       })
       .addCase(updateTeam.rejected, (state, action) => {
@@ -106,7 +107,7 @@ const teamSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Fetch team
+      // Fetch teams
       .addCase(fetchTeam.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -128,9 +129,7 @@ const teamSlice = createSlice({
       })
       .addCase(deleteTeam.fulfilled, (state, action) => {
         state.loading = false;
-        if (state.team) {
-          state.team = state.team.filter((team) => team.id !== action.payload);
-        }
+        state.team = state.team.filter((team) => team.id !== action.payload);
         state.error = null;
       })
       .addCase(deleteTeam.rejected, (state, action) => {
