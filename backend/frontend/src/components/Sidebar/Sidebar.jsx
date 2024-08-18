@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import CreateUpdate from "../Team/CreateUpdate";
 import Login from "../Auth/Login";
 import ForgetPassword from "../Auth/ForgetPassword";
-import ResetPassword from "../Auth/ResetPassword";
+import CreateTask from "../Task/CreateTask";
 import CreateProject from "../Project/CreateProject";
 import DisplayProfile from "../Profile/DisplayProfile";
 import Dashboard from "../../pages/Dashboard/Dashboard";
@@ -64,7 +64,7 @@ const Sidebar = () => {
       case "add-team":
         return <CreateUpdate />;
       case "add-task":
-        return <ResetPassword />;
+        return <CreateTask />;
       case "add-project":
         return <CreateProject />;
       case "add-members":

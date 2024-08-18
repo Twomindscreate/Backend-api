@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { createMember } from "../../store/member/memberSlice";
 
-const useMenberCRUD = () => {
+const useMemberCRUD = () => {
   const dispatch = useDispatch();
   const memberState = useSelector((state) => state.member);
 
@@ -34,4 +34,4 @@ const useMenberCRUD = () => {
   };
 };
 
-export default useMenberCRUD;
+export default useMemberCRUD;
