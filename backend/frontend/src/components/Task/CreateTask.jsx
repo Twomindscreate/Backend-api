@@ -1,21 +1,11 @@
-// src/components/Task/CreateTaskComponent.js
-
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Form,
-  Modal,
-  Input,
-  Table,
-  Header,
-  Icon,
-} from "semantic-ui-react";
+import { Button, Form, Modal, Input, Table, Icon } from "semantic-ui-react";
 import useTaskCRUD from "../../hooks/Task/useTaskCRUD";
 
 const CreateTaskComponent = () => {
   const {
     tasks,
-    loading,
+
     handleCreateTask,
     handleFetchTasks,
     handleUpdateTask,
@@ -59,7 +49,6 @@ const CreateTaskComponent = () => {
         description: "",
         assigned_to: "",
         project: "",
-        status: "",
 
         completion_date: "",
       });
@@ -185,14 +174,6 @@ const CreateTaskComponent = () => {
                 onChange={handleChange}
               />
             </Form.Field>
-            <Form.Field>
-              <label>Status</label>
-              <Input
-                name="status"
-                value={taskForm.status}
-                onChange={handleChange}
-              />
-            </Form.Field>
 
             <Form.Field>
               <label>Completion Date</label>
@@ -214,6 +195,7 @@ const CreateTaskComponent = () => {
 };
 
 export default CreateTaskComponent;
+
 // import React, { useEffect, useState } from "react";
 // import {
 //   Button,
@@ -242,8 +224,8 @@ export default CreateTaskComponent;
 //   const [taskForm, setTaskForm] = useState({
 //     title: "",
 //     description: "",
-//     assigned_to: "",
-//     project: "",
+//     assigned_to: [],
+//     project: [],
 //     status: "",
 //     completion_date: "",
 //   });
@@ -254,21 +236,19 @@ export default CreateTaskComponent;
 //   useEffect(() => {
 //     handleFetchTasks();
 
-//     axios
-//       .get("/api/members/")
-//       .then((response) => {
+//     axios.get('/api/members/')
+//       .then(response => {
 //         console.log("Members fetched:", response.data);
 //         setMembers(response.data);
 //       })
-//       .catch((error) => console.error("Error fetching members:", error));
+//       .catch(error => console.error("Error fetching members:", error));
 
-//     axios
-//       .get("/api/projects/")
-//       .then((response) => {
+//     axios.get('/api/projects/')
+//       .then(response => {
 //         console.log("Projects fetched:", response.data);
 //         setProjects(response.data);
 //       })
-//       .catch((error) => console.error("Error fetching projects:", error));
+//       .catch(error => console.error("Error fetching projects:", error));
 //   }, []);
 
 //   const handleChange = (e, { name, value }) => {
@@ -286,8 +266,8 @@ export default CreateTaskComponent;
 //       setTaskForm({
 //         title: "",
 //         description: "",
-//         assigned_to: "",
-//         project: "",
+//         assigned_to: [],
+//         project: [],
 //         status: "",
 //         completion_date: "",
 //       });
@@ -343,8 +323,8 @@ export default CreateTaskComponent;
 //               <Table.Row key={task.id}>
 //                 <Table.Cell>{task.title}</Table.Cell>
 //                 <Table.Cell>{task.description}</Table.Cell>
-//                 <Table.Cell>{task.assigned_to}</Table.Cell>
-//                 <Table.Cell>{task.project}</Table.Cell>
+//                 <Table.Cell>{task.assigned_to.join(', ')}</Table.Cell>
+//                 <Table.Cell>{task.project.join(', ')}</Table.Cell>
 //                 <Table.Cell>{task.status}</Table.Cell>
 //                 <Table.Cell>{task.completion_date}</Table.Cell>
 //                 <Table.Cell>
@@ -366,7 +346,7 @@ export default CreateTaskComponent;
 //             ))
 //           ) : (
 //             <Table.Row>
-//               <Table.Cell colSpan="8" textAlign="center">
+//               <Table.Cell colSpan="7" textAlign="center">
 //                 No tasks found.
 //               </Table.Cell>
 //             </Table.Row>
@@ -397,32 +377,36 @@ export default CreateTaskComponent;
 //               <label>Assigned To</label>
 //               <Dropdown
 //                 name="assigned_to"
-//                 placeholder="Select Member"
+//                 placeholder="Select Members"
 //                 fluid
+//                 multiple
+//                 search
 //                 selection
-//                 options={members.map((member) => ({
+//                 options={members.map(member => ({
 //                   key: member.id,
 //                   value: member.id,
-//                   text: member.name,
+//                   text: member.name
 //                 }))}
 //                 value={taskForm.assigned_to}
-//                 onChange={handleChange}
+//                 onChange={(e, { name, value }) => handleChange(e, { name, value: value })}
 //               />
 //             </Form.Field>
 //             <Form.Field>
 //               <label>Project</label>
 //               <Dropdown
 //                 name="project"
-//                 placeholder="Select Project"
+//                 placeholder="Select Projects"
 //                 fluid
+//                 multiple
+//                 search
 //                 selection
-//                 options={projects.map((project) => ({
+//                 options={projects.map(project => ({
 //                   key: project.id,
 //                   value: project.id,
-//                   text: project.name,
+//                   text: project.name
 //                 }))}
 //                 value={taskForm.project}
-//                 onChange={handleChange}
+//                 onChange={(e, { name, value }) => handleChange(e, { name, value: value })}
 //               />
 //             </Form.Field>
 //             <Form.Field>

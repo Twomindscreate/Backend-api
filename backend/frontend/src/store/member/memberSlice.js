@@ -2,69 +2,71 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosInstance from "../../Api/AxiosInstance";
 import { toast } from "react-toastify";
 
-// Create Member api call
+// Create Team Member API call
 export const createMember = createAsyncThunk(
   "members/createMember",
-  async ({ memberData }, { rejectWithValue }) => {
+
+  async (memberData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("members/", memberData);
-      toast.success("Member created successfully");
+      toast.success("Member created successfully...!");
       return response.data;
     } catch (err) {
-      const error = err.response ? err.response.data : "Error Creating Member";
+      const error = err.response ? err.response.data : "Error Creating member ";
       toast.error(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
-// update member api call
+// update api call
 export const updateMember = createAsyncThunk(
-  "members/updateTeam",
-  async (memberData, { rejectWithValue }) => {
+  "members/updateMember",
+
+  async ({ id, memberData }, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.put(
-        `members/${memberData.id}`,
-        memberData
-      );
-      toast.success("Member updated successfully");
+      const response = await AxiosInstance.put(`tasks/${id}/`, memberData);
+      toast.success("Member Updated Successfully...!");
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Updating Member";
       toast.error(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error);
     }
   }
 );
 
-// fetch members api call
-export const fetchMember = createAsyncThunk(
+// Fetch member api call
+
+export const fetchMembers = createAsyncThunk(
   "members/fetchMembers",
-  async ({ rejectWithValue }) => {
+
+  async (_, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get("members/");
       return response.data;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Fetching Members";
       toast.error(error);
-      return rejectWithValue(err);
+      return rejectWithValue(error);
     }
   }
 );
 
-// delete member api call
+// Delete member api call
 
 export const deleteMember = createAsyncThunk(
-  "members/deleteMenber",
-  async (memberID, { rejectWithValue }) => {
+  "members/deleteMembers",
+
+  async (id, { rejectWithValue }) => {
     try {
-      await AxiosInstance.delete("members/${mrmberData.id}");
-      toast.success("Member deleted successfully");
-      return memberID;
+      await AxiosInstance.delete(`members/${id}/`);
+      toast.success("Member deleted successfully...!");
+      return id;
     } catch (err) {
       const error = err.response ? err.response.data : "Error Deleting Member";
       toast.error(error);
-      return rejectWithValue(err);
+      return rejectWithValue(error);
     }
   }
 );
@@ -72,24 +74,24 @@ export const deleteMember = createAsyncThunk(
 const memberSlice = createSlice({
   name: "member",
   initialState: {
-    member: null,
+    members: [],
     loading: false,
     error: null,
   },
 
   reducers: {},
+
   extraReducers: (builder) => {
     builder
 
-      // create members/
-      .addCase(createMember.pending, (state, action) => {
+      .addCase(createMember.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
       .addCase(createMember.fulfilled, (state, action) => {
         state.loading = false;
-        state.members = action.payload;
+        state.members.push(action.payload);
         state.error = null;
       })
 
@@ -98,15 +100,16 @@ const memberSlice = createSlice({
         state.error = action.payload;
       })
 
-      // update members
-
       .addCase(updateMember.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
+
       .addCase(updateMember.fulfilled, (state, action) => {
         state.loading = false;
-        state.members = action.payload;
+        state.members = state.members.map((member) =>
+          member.id === action.payload.id ? action.payload : member
+        );
         state.error = null;
       })
 
@@ -115,34 +118,30 @@ const memberSlice = createSlice({
         state.error = action.payload;
       })
 
-      // fetch members
-      .addCase(fetchMember.pending, (state) => {
+      .addCase(fetchMembers.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
 
-      .addCase(fetchMember.fulfilled, (state, action) => {
+      .addCase(fetchMembers.fulfilled, (state, action) => {
         state.loading = false;
         state.members = action.payload;
         state.error = null;
       })
 
-      .addCase(fetchMember.rejected, (state, action) => {
+      .addCase(fetchMembers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      // delete members
       .addCase(deleteMember.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
 
       .addCase(deleteMember.fulfilled, (state, action) => {
         state.loading = false;
-        state.member = state.member.filter(
-          (member) => member.id !== action.payload
-        );
+        state.members = action.payload;
         state.error = null;
       })
 

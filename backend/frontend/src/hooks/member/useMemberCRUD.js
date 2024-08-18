@@ -1,26 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createMember } from "../../store/member/memberSlice";
+import {
+  createMember,
+  fetchMembers,
+  updateMember,
+  deleteMember,
+} from "../../store/member/memberSlice";
 
 const useMemberCRUD = () => {
   const dispatch = useDispatch();
   const memberState = useSelector((state) => state.member);
 
-  // create member
+  // Create a new member
   const handleCreateMember = (memberData) => {
     dispatch(createMember(memberData));
   };
 
-  // fetch member by
-  const handleFetchMember = (id) => {
-    dispatch(fetchMember(id));
+  // Fetch all members
+  const handleFetchMembers = () => {
+    dispatch(fetchMembers());
   };
 
-  // update member
+  // Update a member
   const handleUpdateMember = (id, memberData) => {
     dispatch(updateMember({ id, memberData }));
   };
 
-  // delete member
+  //delete a member
   const handleDeleteMember = (id) => {
     dispatch(deleteMember(id));
   };
@@ -28,7 +33,7 @@ const useMemberCRUD = () => {
   return {
     ...memberState,
     handleCreateMember,
-    handleFetchMember,
+    handleFetchMembers,
     handleUpdateMember,
     handleDeleteMember,
   };

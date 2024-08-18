@@ -1,4 +1,3 @@
-// hooks/useTeamCRUD.js
 import { useDispatch, useSelector } from "react-redux";
 import {
   createTeam,
