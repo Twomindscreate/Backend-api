@@ -8,15 +8,18 @@ import {
   Table,
   Header,
   Icon,
+  Loader,
+  Message,
+  Image,
 } from "semantic-ui-react";
 import useMemberCRUD from "../../hooks/member/useMemberCRUD";
 import useTeamCRUD from "../../hooks/Team/useTeamCRUD";
 
 const CreateMember = () => {
   const {
-    members = [], // Default to empty array if undefined
+    members = [],
     loading,
-    users = [], // Default to empty array if undefined
+    users = [],
     handleCreateMember,
     handleFetchMembers,
     handleUpdateMember,
@@ -24,13 +27,13 @@ const CreateMember = () => {
     handleFetchUsers,
   } = useMemberCRUD();
 
-  const { teams = [], handleFetchTeams } = useTeamCRUD(); // Default to empty array if undefined
+  const { teams = [], handleFetchTeams } = useTeamCRUD();
 
   const [open, setOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchUser, setSearchUser] = useState(""); // State for user search
   const [memberForm, setMemberForm] = useState({
     user: "",
-    team: "", // Team ID will be stored here
+    team: "",
     role: "",
     joined_at: "",
   });
@@ -42,7 +45,7 @@ const CreateMember = () => {
       try {
         await handleFetchMembers();
         await handleFetchTeams();
-        await handleFetchUsers(); // Fetch users for dropdown menu
+        await handleFetchUsers();
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -56,8 +59,8 @@ const CreateMember = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form from refreshing the page
-    if (isSubmitting) return; // Prevent duplicate submissions
+    e.preventDefault();
+    if (isSubmitting) return;
 
     setIsSubmitting(true);
     try {
@@ -69,7 +72,7 @@ const CreateMember = () => {
       setOpen(false);
       setMemberForm({ user: "", team: "", role: "", joined_at: "" });
       setEditingMember(null);
-      await handleFetchMembers(); // Refetch members after submit
+      await handleFetchMembers();
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
@@ -84,20 +87,19 @@ const CreateMember = () => {
     }
     try {
       await handleDeleteMember(id);
-      await handleFetchMembers(); // Refetch members after deletion
+      await handleFetchMembers();
     } catch (error) {
       console.error("Error deleting member:", error);
     }
   };
 
-  // Filter members based on search term
+  // Filter members based on the search term for user
   const filteredMembers = members.filter((member) => {
-    const userName =
-      typeof member.user === "string" ? member.user.toLowerCase() : "";
-    return userName.includes(searchTerm.toLowerCase());
+    const user = users.find((u) => u.id === member.user);
+    const userName = user ? user.full_name.toLowerCase() : "";
+    return userName.includes(searchUser.toLowerCase());
   });
 
-  // Prepare teams for dropdown
   const teamOptions = teams.map((team) => ({
     key: team.id,
     text: team.name,
@@ -106,18 +108,26 @@ const CreateMember = () => {
 
   const userOptions = users.map((user) => ({
     key: user.id,
-    text: user.name,
+    text: user.full_name,
     value: user.id,
-    image: { avatar: true, src: user.profile_picture },
+    image: { avatar: true, src: user.profile_image },
   }));
+
+  const getUserName = (userId) => {
+    const user = users.find((u) => u.id === userId);
+    return user ? user.full_name : "Unknown";
+  };
 
   return (
     <div style={{ padding: "20px" }}>
+      {loading && <Loader active inline="centered" />}
+      {loading && <Message>Loading...</Message>}
+
       <Input
         icon="search"
-        placeholder="Search members..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="Search by user..."
+        value={searchUser}
+        onChange={(e) => setSearchUser(e.target.value)}
         style={{ marginBottom: "20px", width: "50%" }}
       />
       <Button color="green" onClick={() => setOpen(true)}>
@@ -138,7 +148,9 @@ const CreateMember = () => {
           {filteredMembers.length > 0 ? (
             filteredMembers.map((member) => (
               <Table.Row key={member.id}>
-                <Table.Cell>{member.user}</Table.Cell>
+                <Table.Cell>
+                  {getUserName(member.user)} {/* Display user's full name */}
+                </Table.Cell>
                 <Table.Cell>{member.role}</Table.Cell>
                 <Table.Cell>{member.joined_at}</Table.Cell>
                 <Table.Cell>
@@ -197,6 +209,19 @@ const CreateMember = () => {
                 onChange={(e, { value }) =>
                   handleChange(e, { name: "user", value })
                 }
+                renderLabel={(option) => (
+                  <span>
+                    {option.image && option.image.src ? (
+                      <Image
+                        className="ui mini avatar image"
+                        src={option.image.src}
+                        alt={option.text}
+                        style={{ marginRight: "5px" }}
+                      />
+                    ) : null}
+                    {option.text}
+                  </span>
+                )}
               />
             </Form.Field>
 
@@ -229,21 +254,25 @@ const CreateMember = () => {
                 name="joined_at"
                 value={memberForm.joined_at}
                 onChange={handleChange}
-                placeholder="Enter join date"
+                type="date"
               />
             </Form.Field>
+            <Button type="submit" color="green" loading={isSubmitting}>
+              Submit
+            </Button>
             <Button
-              type="submit"
-              color="green"
-              loading={loading || isSubmitting}
+              type="button"
+              color="red"
+              onClick={() => {
+                setOpen(false);
+                setMemberForm({ user: "", team: "", role: "", joined_at: "" });
+                setEditingMember(null);
+              }}
             >
-              {editingMember ? "Update Member" : "Create Member"}
+              Cancel
             </Button>
           </Form>
         </Modal.Content>
-        <Modal.Actions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-        </Modal.Actions>
       </Modal>
     </div>
   );

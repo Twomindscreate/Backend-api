@@ -312,8 +312,7 @@ def task_detail(request, pk):
 class UserListView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request):
-        profiles = Profile.objects.all()
-        serializer = UserProfileSerializer(profiles, many = True)
+    def get(self, request, *args, **kwargs):
+        users = User.objects.all()
+        serializer = UserProfileSerializer(users, many=True)
         return Response(serializer.data)
-    

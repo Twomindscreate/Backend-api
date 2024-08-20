@@ -214,12 +214,21 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = ['id','title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField(source = "user.id")
-    full_name = serializers.ReadOnlyField(source = "user.get_full_name")
-    profile_picture = serializers.ImageField(source = "profile_picture", read_only = True )
+    full_name = serializers.ReadOnlyField(source='get_full_name')
+    profile_image = serializers.SerializerMethodField()
 
     class Meta:
-        model = Profile
-        fields = [
-            "id", "full_name", "profile_picture"
-        ]
+        model = User
+        fields = ['id', 'full_name', 'profile_image']
+
+    def get_profile_image(self, obj):
+        try:
+            # Attempt to retrieve the profile picture URL
+            if obj.profile.profile_picture:
+                return obj.profile.profile_picture.url
+        except Profile.DoesNotExist:
+            # If Profile does not exist, use the default image
+            pass
+        # Return default image URL if profile picture is not set or profile doesn't exist
+        return '/static/images/profile2.png'
+        
