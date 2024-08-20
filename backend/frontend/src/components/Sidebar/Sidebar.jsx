@@ -8,11 +8,12 @@ import "./Sidebar.css";
 import { toast } from "react-toastify";
 import CreateUpdate from "../Team/CreateUpdate";
 import Login from "../Auth/Login";
-import ForgetPassword from "../Auth/ForgetPassword";
+
 import CreateTask from "../Task/CreateTask";
 import CreateProject from "../Project/CreateProject";
 import DisplayProfile from "../Profile/DisplayProfile";
 import Dashboard from "../../pages/Dashboard/Dashboard";
+import CreateMember from "../Member/CreateMember";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -68,7 +69,7 @@ const Sidebar = () => {
       case "add-project":
         return <CreateProject />;
       case "add-members":
-        return <ForgetPassword />;
+        return <CreateMember />;
       case "profile":
         return <DisplayProfile />;
 

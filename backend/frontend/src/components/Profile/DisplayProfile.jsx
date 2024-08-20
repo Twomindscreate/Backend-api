@@ -68,16 +68,6 @@ const ProfileForm = () => {
 
   return (
     <Container className="profile-container animated-form">
-      <Header as="h2" icon textAlign="center" className="form-header">
-        <div className="profile-photo">
-          <Image
-            src={formData.photo || "https://via.placeholder.com/120"}
-            alt="Profile"
-            className="profile-image"
-          />
-        </div>
-        Profile Information
-      </Header>
       {!submitted ? (
         <Grid centered>
           <Grid.Row>
@@ -208,73 +198,86 @@ const ProfileForm = () => {
           </Grid.Row>
         </Grid>
       ) : (
-        <div className="profile-display">
-          <div className="cards-container">
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Username</Card.Header>
-                <Card.Description>{formData.username}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Phone Number</Card.Header>
-                <Card.Description>{formData.phone_number}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Address</Card.Header>
-                <Card.Description>{formData.address}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Occupation</Card.Header>
-                <Card.Description>{formData.occupation}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Department</Card.Header>
-                <Card.Description>{formData.department}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Role</Card.Header>
-                <Card.Description>{formData.role}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Birth Date</Card.Header>
-                <Card.Description>{formData.birth_date}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Gender</Card.Header>
-                <Card.Description>{formData.gender}</Card.Description>
-              </Card.Content>
-            </Card>
-            <Card className="display-card">
-              <Card.Content>
-                <Card.Header>Bio</Card.Header>
-                <Card.Description>{formData.bio}</Card.Description>
-              </Card.Content>
-            </Card>
+        <>
+          <Header as="h2" icon textAlign="center" className="form-header">
+            <div className="profile-photo">
+              <Image
+                src={formData.photo || "https://via.placeholder.com/120"}
+                alt="Profile"
+                className="profile-image"
+              />
+            </div>
+            Profile Information
+          </Header>
+
+          <div className="profile-display">
+            <div className="cards-container">
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Username</Card.Header>
+                  <Card.Description>{formData.username}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Phone Number</Card.Header>
+                  <Card.Description>{formData.phone_number}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Address</Card.Header>
+                  <Card.Description>{formData.address}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Occupation</Card.Header>
+                  <Card.Description>{formData.occupation}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Department</Card.Header>
+                  <Card.Description>{formData.department}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Role</Card.Header>
+                  <Card.Description>{formData.role}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Birth Date</Card.Header>
+                  <Card.Description>{formData.birth_date}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Gender</Card.Header>
+                  <Card.Description>{formData.gender}</Card.Description>
+                </Card.Content>
+              </Card>
+              <Card className="display-card">
+                <Card.Content>
+                  <Card.Header>Bio</Card.Header>
+                  <Card.Description>{formData.bio}</Card.Description>
+                </Card.Content>
+              </Card>
+            </div>
+            <div className="button-group">
+              <Button
+                color="green"
+                onClick={handleUpdateProfile}
+                className="update-button1"
+              >
+                Update Profile
+              </Button>
+            </div>
           </div>
-          <div className="button-group">
-            <Button
-              color="green"
-              onClick={handleUpdateProfile}
-              className="update-button1"
-            >
-              Update Profile
-            </Button>
-          </div>
-        </div>
+        </>
       )}
     </Container>
   );
