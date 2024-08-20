@@ -1,4 +1,4 @@
-from unicodedata import name
+
 from django.urls import path
 from . import views
 from .views import (
@@ -7,7 +7,7 @@ from .views import (
         LoginUserView, 
         TestingAuthenticatedReq, 
         PasswordResetConfirm, 
-        PasswordResetRequestView,SetNewPasswordView, LogoutApiView,ProfileView
+        PasswordResetRequestView,SetNewPasswordView, LogoutApiView,ProfileView, UserListView
         )
 from rest_framework_simplejwt.views import (TokenRefreshView,)
 
@@ -34,5 +34,8 @@ urlpatterns = [
     
     path('tasks/', views.task_list_create, name='task_list_create'),
     path('tasks/<int:pk>/', views.task_detail, name='task_detail'),
+
+    path('users/', UserListView.as_view(), name='user-list'),
+    
     ]
 

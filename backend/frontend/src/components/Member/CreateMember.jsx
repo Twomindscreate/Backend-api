@@ -14,15 +14,17 @@ import useTeamCRUD from "../../hooks/Team/useTeamCRUD";
 
 const CreateMember = () => {
   const {
-    members,
+    members = [], // Default to empty array if undefined
     loading,
+    users = [], // Default to empty array if undefined
     handleCreateMember,
     handleFetchMembers,
     handleUpdateMember,
     handleDeleteMember,
+    handleFetchUsers,
   } = useMemberCRUD();
 
-  const { teams, handleFetchTeams } = useTeamCRUD(); // Fetch teams
+  const { teams = [], handleFetchTeams } = useTeamCRUD(); // Default to empty array if undefined
 
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,19 +37,18 @@ const CreateMember = () => {
   const [editingMember, setEditingMember] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch members and teams only once when the component is mounted
   useEffect(() => {
     const fetchData = async () => {
       try {
         await handleFetchMembers();
         await handleFetchTeams();
+        await handleFetchUsers(); // Fetch users for dropdown menu
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-    // Empty dependency array ensures this effect runs only once after the initial render
   }, []);
 
   const handleChange = (e, { name, value }) => {
@@ -91,7 +92,6 @@ const CreateMember = () => {
 
   // Filter members based on search term
   const filteredMembers = members.filter((member) => {
-    // Check if member.user is a string before calling toLowerCase
     const userName =
       typeof member.user === "string" ? member.user.toLowerCase() : "";
     return userName.includes(searchTerm.toLowerCase());
@@ -102,6 +102,13 @@ const CreateMember = () => {
     key: team.id,
     text: team.name,
     value: team.id,
+  }));
+
+  const userOptions = users.map((user) => ({
+    key: user.id,
+    text: user.name,
+    value: user.id,
+    image: { avatar: true, src: user.profile_picture },
   }));
 
   return (
@@ -179,13 +186,20 @@ const CreateMember = () => {
           <Form onSubmit={handleSubmit}>
             <Form.Field>
               <label>User</label>
-              <Input
+              <Dropdown
+                placeholder="Select User"
+                fluid
+                search
+                selection
+                options={userOptions}
                 name="user"
                 value={memberForm.user}
-                onChange={handleChange}
-                placeholder="Enter user name"
+                onChange={(e, { value }) =>
+                  handleChange(e, { name: "user", value })
+                }
               />
             </Form.Field>
+
             <Form.Field>
               <label>Team</label>
               <Dropdown

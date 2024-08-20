@@ -5,7 +5,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from .models import OneTimePassword
 from .serializers import (PasswordResetRequestSerializer,LogoutUserSerializer, UserRegisterSerializer, LoginSerializer
-,SetNewPasswordSerializer,ProfileSerializer ,TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer)
+,SetNewPasswordSerializer,ProfileSerializer ,TeamSerializer, MemberSerializer, ProjectSerializer, TaskSerializer, UserProfileSerializer)
 from rest_framework import status,permissions
 from .utils import send_generated_otp_to_email
 from rest_framework.decorators import api_view
@@ -307,3 +307,13 @@ def task_detail(request, pk):
     elif request.method == 'DELETE':
         task.delete()
         return Response({"message": "Task deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    
+
+class UserListView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        profiles = Profile.objects.all()
+        serializer = UserProfileSerializer(profiles, many = True)
+        return Response(serializer.data)
+    

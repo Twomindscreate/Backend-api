@@ -212,3 +212,14 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['id','title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField(source = "user.id")
+    full_name = serializers.ReadOnlyField(source = "user.get_full_name")
+    profile_picture = serializers.ImageField(source = "profile_picture", read_only = True )
+
+    class Meta:
+        model = Profile
+        fields = [
+            "id", "full_name", "profile_picture"
+        ]
