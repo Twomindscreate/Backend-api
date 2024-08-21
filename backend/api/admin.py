@@ -18,5 +18,9 @@ class TeamAdmin(admin.ModelAdmin):
 @admin.register(Member)
 class MemberAdmin(admin.ModelAdmin):
     list_display = ( 'user', 'team', 'role')
-admin.site.register(Project)
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ( 'name', 'description', 'team', 'start_date', 'end_date', 'created_at')
+
 admin.site.register(Task)

@@ -10,7 +10,7 @@ const useProjectCRUD = () => {
   const dispatch = useDispatch();
   const { projects, loading, error } = useSelector((state) => state.project);
 
-  // Create a new project
+  // Create new project
   const handleCreateProject = async (projectData) => {
     try {
       await dispatch(createProject(projectData)).unwrap();
@@ -19,7 +19,7 @@ const useProjectCRUD = () => {
     }
   };
 
-  // Fetch all projects
+  //Fetch all projects
   const handleFetchProjects = async () => {
     try {
       await dispatch(fetchProjects()).unwrap();
