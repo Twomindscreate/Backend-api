@@ -95,14 +95,12 @@ const CreateTaskComponent = () => {
   };
 
   const filteredTasks = tasks.filter((task) =>
-    task.title
-      ? task.title.toLowerCase().includes(searchTerm.toLowerCase())
-      : false
+    task.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const memberOptions = members.map((member) => ({
     key: member.id,
-    text: member.id,
+    text: member.user.email, // Assuming the user model has an email attribute
     value: member.id,
   }));
 
@@ -142,17 +140,24 @@ const CreateTaskComponent = () => {
                 <Table.Cell>{task.description}</Table.Cell>
                 <Table.Cell>
                   {members.find((member) => member.id === task.assigned_to)
-                    ?.name || "N/A"}
+                    ?.user.email || "N/A"}
                 </Table.Cell>
                 <Table.Cell>{task.project}</Table.Cell>
                 <Table.Cell>{task.status}</Table.Cell>
-                <Table.Cell>{task.completion_date}</Table.Cell>
+                <Table.Cell>{task.completion_date || "N/A"}</Table.Cell>
                 <Table.Cell>
                   <Button
                     color="yellow"
                     onClick={() => {
                       setEditingTask(task);
-                      setTaskForm(task);
+                      setTaskForm({
+                        title: task.title,
+                        description: task.description,
+                        assigned_to: task.assigned_to,
+                        project: task.project,
+                        status: task.status,
+                        completion_date: task.completion_date,
+                      });
                       setOpen(true);
                     }}
                   >
@@ -209,14 +214,12 @@ const CreateTaskComponent = () => {
                 }
                 renderLabel={(option) => (
                   <span>
-                    {option.image && option.image.src ? (
-                      <Image
-                        className="ui mini avatar image"
-                        src={option.image.src}
-                        alt={option.text}
-                        style={{ marginRight: "5px" }}
-                      />
-                    ) : null}
+                    <Image
+                      className="ui mini avatar image"
+                      src={option.image?.src}
+                      alt={option.text}
+                      style={{ marginRight: "5px" }}
+                    />
                     {option.text}
                   </span>
                 )}

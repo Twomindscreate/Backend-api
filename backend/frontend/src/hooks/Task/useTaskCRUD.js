@@ -31,7 +31,7 @@ const useTaskCRUD = () => {
   };
 
   return {
-    ...taskState, // Include all state properties (tasks, loading, error, etc.)
+    ...taskState,
     handleCreateTask,
     handleFetchTasks,
     handleUpdateTask,
