@@ -25,6 +25,10 @@ const TeamComponent = () => {
   const [teamForm, setTeamForm] = useState({ name: "", description: "" });
   const [editingTeam, setEditingTeam] = useState(null);
 
+  useEffect(() => {
+    console.log("teams", teams);
+  }, [teams]);
+
   // Fetch teams only once when the component is mounted
   useEffect(() => {
     handleFetchTeams();

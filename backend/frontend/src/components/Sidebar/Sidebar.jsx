@@ -8,12 +8,12 @@ import "./Sidebar.css";
 import { toast } from "react-toastify";
 import CreateUpdate from "../Team/CreateUpdate";
 import Login from "../Auth/Login";
-
 import CreateTask from "../Task/CreateTask";
-import CreateProject from "../Project/CreateProject";
+
 import DisplayProfile from "../Profile/DisplayProfile";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import CreateMember from "../Member/CreateMember";
+import CreateProject from "../Project/CreateProject";
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(false);

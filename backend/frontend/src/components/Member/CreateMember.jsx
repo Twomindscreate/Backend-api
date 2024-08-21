@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import useMemberCRUD from "../../hooks/member/useMemberCRUD";
 import useTeamCRUD from "../../hooks/Team/useTeamCRUD";
+import image from "./static/images/profile2.png";
 
 const CreateMember = () => {
   const {
@@ -110,7 +111,7 @@ const CreateMember = () => {
     key: user.id,
     text: user.full_name,
     value: user.id,
-    image: { avatar: true, src: user.profile_image },
+    image: { avatar: true, src: image },
   }));
 
   const getUserName = (userId) => {
