@@ -35,7 +35,7 @@ const NavBar = () => {
           <Nav.Link
             to="/cart"
             as={Link}
-            className={pathname.includes("/teams") ? "active" : ""}
+            className={pathname.includes("/cart") ? "active" : ""}
           >
             Cart
           </Nav.Link>

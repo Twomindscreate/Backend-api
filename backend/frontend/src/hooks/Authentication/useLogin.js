@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AxiosInstance from "../../Api/AxiosInstance";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout, reset } from "../../store/Slice/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     email: "",
@@ -15,8 +22,13 @@ const useLogin = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    isSuccess && navigate("/dashboard");
+  }, [isSuccess]);
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    // dispatch(login(loginData));
     setLoading(true);
 
     try {
@@ -43,13 +55,15 @@ const useLogin = () => {
   };
 
   const handleLogout = async () => {
+    // dispatch(logout());
     const refresh = JSON.parse(localStorage.getItem("refresh_token"));
     const res = await AxiosInstance.post("logout/", {
       refresh_token: refresh,
     });
     if (res.status === 204) {
-      localStorage.clear();
-      navigate("/login");
+      // dispatch(logout());
+      // dispatch(reset);
+      navigate("/");
       toast.warn("Logout successful");
     }
   };
@@ -58,7 +72,7 @@ const useLogin = () => {
     handleOnChange,
     handleOnSubmit,
     handleLogout,
-    loading,
+    loading: isLoading,
     loginData,
   };
 };

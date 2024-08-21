@@ -3,8 +3,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { add } from "../../store/cartSlice";
-import { getProducts } from "../../store/productSlice";
+import { add } from "../../store/Slice/product/cartSlice";
+import { getProducts } from "../../store/Slice/product/productSlice";
 
 const Product = () => {
   const dispatch = useDispatch();

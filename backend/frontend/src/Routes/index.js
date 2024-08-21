@@ -18,6 +18,9 @@ import NotFound from "./NotFound";
 import ProtectedRoute from "./ProtectedRoute";
 import Cart from "../Pages/Dashboard/Cart";
 
+import { Provider } from "react-redux";
+import store from "../store/store";
+
 function PageRoutes() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -78,7 +81,11 @@ function PageRoutes() {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default PageRoutes;

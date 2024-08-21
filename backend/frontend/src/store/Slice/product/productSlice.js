@@ -16,12 +16,12 @@ const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (state, action) => {
+      .addCase(getProducts.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       })
       .addCase(getProducts.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.data = action.payload;
       })
@@ -34,6 +34,7 @@ const productSlice = createSlice({
 });
 
 export const { fetchProducts } = productSlice.actions;
+
 export default productSlice.reducer;
 
 export const getProducts = createAsyncThunk("products/get", async () => {
@@ -43,7 +44,7 @@ export const getProducts = createAsyncThunk("products/get", async () => {
 });
 
 // export function getProducts() {
-//   return async function getProductsThunk(dispatch, getState) {
+//   return async function (dispatch, getState) {
 //     const data = await fetch("https://fakestoreapi.com/products");
 //     const result = await data.json();
 //     dispatch(fetchProducts(result));
