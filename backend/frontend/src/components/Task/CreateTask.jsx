@@ -12,7 +12,8 @@ import {
   Image,
 } from "semantic-ui-react";
 import useTaskCRUD from "../../hooks/Task/useTaskCRUD";
-import useMemberCRUD from "../../hooks/member/useMemberCRUD";
+
+import useProjectCRUD from "../../hooks/Project/useProjectCRUD";
 
 const CreateTaskComponent = () => {
   const {
@@ -22,9 +23,10 @@ const CreateTaskComponent = () => {
     handleFetchTasks,
     handleUpdateTask,
     handleDeleteTask,
+    handleFetchMembers,
   } = useTaskCRUD();
 
-  const { members = [], handleFetchMembers } = useMemberCRUD();
+  const { projects = [], handleFetchProjects } = useProjectCRUD();
 
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,7 +102,7 @@ const CreateTaskComponent = () => {
 
   const memberOptions = members.map((member) => ({
     key: member.id,
-    text: member.user.email, // Assuming the user model has an email attribute
+    text: member.assigned_to, // Assuming the user model has an email attribute
     value: member.id,
   }));
 

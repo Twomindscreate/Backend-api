@@ -65,6 +65,20 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+export const fetchMembers = createAsyncThunk(
+  "menbers/fetchMembers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get("members/");
+      return response.data;
+    } catch (err) {
+      const error = err.response ? err.response.data : "Error Fetching Members";
+      toast.error(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const taskSlice = createSlice({
   name: "task",
   initialState: {
@@ -129,6 +143,21 @@ const taskSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteTask.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(fetchMembers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchMembers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.members = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchMembers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

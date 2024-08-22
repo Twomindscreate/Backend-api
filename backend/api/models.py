@@ -86,7 +86,7 @@ class Member(models.Model):
     
     @property
     def get_assign_to(self):
-        return f"{self.user.email} - {self.team.name}"
+        return f"{self.user.email.title()} - {self.team.name.title()}"
 
 class Project(models.Model):
     name = models.CharField(max_length=100)

@@ -4,38 +4,67 @@ import {
   fetchTask,
   updateTask,
   deleteTask,
+  fetchMembers,
 } from "../../store/Task/TaskSlice";
 
 const useTaskCRUD = () => {
   const dispatch = useDispatch();
-  const taskState = useSelector((state) => state.task);
+  const { tasks, loading, error, members } = useSelector((state) => state.task);
 
   // Create a new task
-  const handleCreateTask = (taskData) => {
-    return dispatch(createTask(taskData)).unwrap();
+  const handleCreateTask = async (taskData) => {
+    try {
+      await dispatch(createTask(taskData)).unwrap();
+    } catch (err) {
+      console.error("Error creating task:", err);
+    }
   };
 
   // Fetch all tasks
-  const handleFetchTasks = () => {
-    dispatch(fetchTask());
+  const handleFetchTasks = async () => {
+    try {
+      await dispatch(fetchTask()).unwrap();
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+    }
   };
-
   // Update a task
-  const handleUpdateTask = (id, taskData) => {
-    return dispatch(updateTask({ id, taskData })).unwrap();
+  const handleUpdateTask = async (id, taskData) => {
+    try {
+      await dispatch(updateTask({ id, taskData })).unwrap();
+    } catch (err) {
+      console.error("Error updating task:", err);
+    }
   };
 
   // Delete a task
-  const handleDeleteTask = (id) => {
-    return dispatch(deleteTask(id)).unwrap();
+  const handleDeleteTask = async (id) => {
+    try {
+      await dispatch(deleteTask(id)).unwrap();
+    } catch (err) {
+      console.error("Error deleting task:", err);
+    }
+  };
+
+  //fetch Members
+  const handleFetchMembers = async () => {
+    try {
+      await dispatch(fetchMembers()).unwrap();
+    } catch (err) {
+      console.error("Error fetching members:", err);
+    }
   };
 
   return {
-    ...taskState,
+    tasks,
+    loading,
+    error,
+    members,
     handleCreateTask,
     handleFetchTasks,
     handleUpdateTask,
     handleDeleteTask,
+    handleFetchMembers,
   };
 };
 
