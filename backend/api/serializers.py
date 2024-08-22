@@ -1,12 +1,12 @@
 from dataclasses import field
 from rest_framework import serializers
-from string import ascii_lowercase, ascii_uppercase
+# from string import ascii_lowercase, ascii_uppercase
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils.encoding import smart_str, force_str, smart_bytes
+from django.utils.encoding import  force_str, smart_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.contrib.sites.shortcuts import get_current_site
+# from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import send_normal_email # type: ignore
 import datetime
@@ -209,6 +209,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = [ 'id', 'name', 'description', 'team', 'start_date', 'end_date', 'created_at']
 
 class TaskSerializer(serializers.ModelSerializer):
+    assigned_to = serializers.StringRelatedField(source = 'get_assign_to')
     class Meta:
         model = Task
         fields = ['id','title', 'description', 'assigned_to', 'project', 'status', 'assigned_date', 'completion_date', 'created_at']

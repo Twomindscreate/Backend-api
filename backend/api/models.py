@@ -72,7 +72,7 @@ class Team(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Member(models.Model):
@@ -81,7 +81,11 @@ class Member(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     joined_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
+        return f"{self.user.email} - {self.team.name}"
+    
+    @property
+    def get_assign_to(self):
         return f"{self.user.email} - {self.team.name}"
 
 class Project(models.Model):
@@ -92,7 +96,7 @@ class Project(models.Model):
     end_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class Task(models.Model):
@@ -111,5 +115,5 @@ class Task(models.Model):
     completion_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def str(self):
+    def __str__(self):
         return self.title
