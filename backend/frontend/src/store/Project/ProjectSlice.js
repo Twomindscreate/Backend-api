@@ -43,6 +43,7 @@ export const fetchProjects = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get("projects/");
+      console.log("Response Data check", response.data);
       return response.data;
     } catch (err) {
       const error = err.response
@@ -79,78 +80,80 @@ const projectSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {
-    extraReducers: (builder) => {
-      builder
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
 
-        .addCase(createProject.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
+      .addCase(fetchProjects.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
 
-        .addCase(createProject.fulfilled, (state, action) => {
-          state.loading = false;
-          state.projects.push(action.payload);
-          state.error = null;
-        })
+      .addCase(fetchProjects.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("payload data", action.payload);
+        state.projects = action.payload;
+        state.error = null;
+      })
 
-        .addCase(createProject.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        })
+      .addCase(fetchProjects.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-        .addCase(updateProject.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
+      .addCase(createProject.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
 
-        .addCase(updateProject.fulfilled, (state, action) => {
-          state.loading = false;
-          state.projects = state.projects.map((project) =>
-            project.id === action.payload.id ? action.payload : project
-          );
-          state.error = null;
-        })
+      .addCase(createProject.fulfilled, (state, action) => {
+        state.loading = false;
 
-        .addCase(updateProject.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        })
+        state.projects.push(action.payload);
 
-        .addCase(fetchProjects.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
+        state.error = null;
+      })
 
-        .addCase(fetchProjects.fulfilled, (state, action) => {
-          state.loading = false;
-          state.projects = action.payload;
-          state.error = null;
-        })
+      .addCase(createProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-        .addCase(fetchProjects.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        })
+      .addCase(updateProject.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
 
-        .addCase(deleteProject.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
+      .addCase(updateProject.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projects = state.projects.map((project) =>
+          project.id === action.payload.id ? action.payload : project
+        );
+        state.error = null;
+      })
 
-        .addCase(deleteProject.fulfilled, (state, action) => {
-          state.loading = false;
-          state.projects = state.projects.filter(
-            (project) => project.id !== action.payload
-          );
-          state.error = null;
-        })
+      .addCase(updateProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
-        .addCase(deleteProject.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        });
-    },
+      .addCase(deleteProject.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.loading = false;
+        state.projects = state.projects.filter(
+          (project) => project.id !== action.payload
+        );
+        state.error = null;
+      })
+
+      .addCase(deleteProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
